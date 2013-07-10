@@ -1,0 +1,11 @@
+quest hhe_icmn begin
+	state start begin
+		when letter begin
+			send_letter_ex("TESTS", "weapon", "icon/weapon/sura/11700.tga")
+		end
+		when button or info begin
+			say_title("Chaegirab's Study")
+			say("Biologist Chaegirab, the apprentice of Uriel is urgently")
+		end
+	end
+end

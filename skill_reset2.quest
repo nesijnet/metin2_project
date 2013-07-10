@@ -1,0 +1,88 @@
+quest skill_reset2 begin
+    state start begin
+        when 9006.chat."Reset your skills" begin
+            if pc.level < 5 then
+                        say_title("Old lady:")
+                        say("")
+                        say("You first need to learn something!")
+                        say("")
+                        return
+                end
+                if pc.level >30 then
+                        say_title("Old lady:")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Your level is "..pc.level..". I can't help you after your")
+                        say("level reaches 30.")
+                        say("")
+                        say("If you want to reset your skill now, you need:")
+                        say("")
+                        say_item_vnum(71054)
+                        say("")
+                        return
+                 end
+                if  pc.get_skill_group()==0 then
+                        say_title("Old lady:")
+                        say("")
+                        say("You don't need to return anything.")
+                        say("")
+                        return
+                end
+
+                        local cost = 5000 + pc.level * 2000
+                        local s = 0
+
+                if not pc.has_master_skill() then
+                    say_title("Old lady:")
+                    say("")
+                    ----"123456789012345678901234567890123456789012345678901234567890"|
+                    say("You are at the right place. You eyes show a lot of sorrow.")
+                    say("I let people forget their skills so they can start all over")
+                    say("again. Do you want to forget your skills,")
+                    say("")
+                    say("It costs "..cost.." Yang.")
+                    say("")
+                    s = select( "Reset my skills", "No, thanks")
+                else
+                    say_title("Old lady:")
+                    say("")
+		    ----"123456789012345678901234567890123456789012345678901234567890"|
+                    say("Ha Ha, is it possible that you are not feeling well? Your")
+                    say("face shows me that you could need some help.")
+                    say("")
+                    say("Are you not satisfied with your skills? Through a magical")
+                    say("way I can help you to forget your skills.")
+                    wait()
+                    say("That means that you can choose a new skill, but sadly you")
+                    say("are going to lose all your points that you have been")
+                    say("working for.")
+                    say("")
+                    say("Are you sure you want to start all over again?")
+                    say("")
+                    say("It costs "..cost.." Yang.")
+                    say("")
+                    s = select("Reset the Skills", "Cancel.")
+                end
+                if 2==s then
+                        say_title("Old lady:")
+                        say("")
+                        say("If you change your mind, come and visit me again.")
+                        say("")
+                        return
+                end
+                if pc.money < cost then
+                        say_title("Old lady:")
+                        say("")
+                        say("You don't have enough Yang.")
+                        say("")
+                        say("I can't help you, I also need money for living.")
+                        say("")
+                        return
+                end
+                pc.changegold(-cost)
+                pc.clear_skill()
+                pc.set_skill_group(0)
+                set_quest_state("skill_group","run")
+end
+    end
+end

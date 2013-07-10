@@ -1,0 +1,84 @@
+quest tome begin
+	state start begin
+		when 69001.use or
+		69002.use or
+		69003.use or
+		69004.use or
+		69005.use or
+		69006.use or
+		69007.use or
+		69008.use or
+		69009.use or
+		69010.use or
+		69011.use or
+		69012.use or
+		69013.use or
+		69014.use or
+		69015.use or
+		69016.use or
+		69017.use or
+		69018.use or
+		69019.use or
+		69020.use or
+		69021.use or
+		69022.use or
+		69023.use or
+		69024.use or
+		69025.use or
+		69026.use or
+		69027.use or
+		69028.use or
+		69029.use or
+		69030.use or
+		69031.use or
+		69032.use or
+		69033.use or
+		69034.use or
+		69035.use or
+		69036.use or
+		69037.use or
+		69038.use or
+		69039.use or
+		69040.use or 
+		69041.use or
+		69042.use or
+		69043.use or
+		69044.use begin
+			tomeskill = item.get_value(0)
+			if pc.getqf("last_read_"..tostring(tomeskill)) > get_time() then
+				syschat("You can't read this book yet.")
+				return
+			end
+			if pc.get_skill_level(tomeskill) > 19 and pc.get_skill_level(tomeskill) < 30 then
+				local n = number(1,10)
+				if (n > 3) then
+					local i = number(1,3)
+					local num
+					if pc.getf("traning_master_skill",tostring(tomeskill)..".read_count") == nil then
+						num = 0
+					else
+						num = pc.getf("traning_master_skill",tostring(tomeskill)..".read_count")
+					end
+					local get_qp = (pc.get_skill_level(tomeskill)-19)
+					pc.setf("traning_master_skill",tostring(tomeskill)..".read_count",pc.getf("traning_master_skill",tostring(tomeskill)..".read_count")+i)
+					syschat("You read the book and learned the secret technique.")
+					if pc.getf("traning_master_skill",tostring(tomeskill..".read_count")) > get_qp-1 then
+						pc.set_skill_level(tomeskill,pc.get_skill_level(tomeskill)+1)
+						pc.setf("traning_master_skill",tostring(tomeskill..".read_count"),0)
+					end
+					item.remove()
+				else
+					syschat("You failed to understand the secret technique. The training was not successful.")
+					item.remove()
+				end
+				if is_test_server() then
+					pc.setqf("last_read_"..tostring(tomeskill),get_time()+30)
+				else
+					pc.setqf("last_read_"..tostring(tomeskill),get_time()+7*24*60*60) -- 1 week
+				end
+			else
+				syschat("You cannot train with this book.")
+			end
+		end
+	end
+end

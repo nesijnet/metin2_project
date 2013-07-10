@@ -1,0 +1,95 @@
+quest main_quest_lv1 begin
+        state start begin
+                when login or levelup with pc.get_level() == 1 begin
+                        set_state( gotoinfomation )
+                end
+        end
+        state gotoinfomation begin
+                when letter begin
+                        send_letter("Welcome to Metin 2")
+                end
+                when button or info begin
+                        say_title("Welcome to Metin 2")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("The exciting adventures of Metin 2 are just beginning!")
+                        say("")
+			say("Please find the City Guard. He will provide you with some")
+			say("basic information and different assignments to help you get")
+			say("accustomed with Metin2.")
+			say("")
+			say("Please find him now. He is waiting for you.")
+                        say("")
+			wait()
+			say_title("Welcome to Metin 2")
+			say("")
+                        say("Should you desire to hunt you will find wild animals just")
+                        say("outside the village. These animals are marked red on the")
+                        say("mini map, which indicates that they are enemies.")
+                        say("")
+                        say("In the beginning you should hunt wild dogs, as they are")
+                        say("the easiest targets.")
+                        say("")
+			say("Good luck!")
+                        say("")
+                        set_state( gototeacher )
+                end
+        end
+
+        state gototeacher begin
+                when letter begin
+                        local v=find_npc_by_vnum(20354)
+                        if v!=0 then
+                                target.vid("__TARGET__", v, mob_name(20354))
+                        end
+                end
+
+                when button or info begin
+                        say_title("Locate the City Guard.")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Talk to the City Guard.")
+                        say("")
+                        say("Find the NPC, that the red arrow is pointing to and click on")
+                        say("him. If you don't see any NPC's, then follow the blinking")
+                        say("red marks on the mini map.")
+                        say("")
+                end
+                when __TARGET__.target.click begin
+                        target.delete("__TARGET__")
+                        say_title("City Guard:")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("You must be new in town! I see they have not made a hero")
+                        say("out of you yet. Do you have any training at all?")
+                        say("")
+                        say("Look at yourself! Do you have any idea how to use a weapon?")
+                        say("Listen! You must be alert if you want to survive this war.")
+                        say("")
+                        say("I will assist you until you have gained enough experience")
+                        say("or reach level 10. I am a busy person so do not waste my")
+                        say("time! Move!")
+                        say("")
+                        wait()
+                        say_title("City Guard:")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Now go and learn some basics!")
+                        say("")
+                        say("Once you have reached a higer level you should return to")
+                        say("the village and speak with me.")
+                        say("")
+                        say("Why are you still standing here?")
+                        say("You will gain no experience standing here!")
+                        say("")
+
+                        clear_letter()
+                        set_state(__COMPLETE__)
+                        set_quest_state("find_squareguard","find")
+                        set_quest_state("main_quest_lv2","run")
+
+                end
+        end
+        state __COMPLETE__ begin
+        end
+end

@@ -1,0 +1,15 @@
+quest blacksmith begin
+	state start begin
+		when blacksmith.chat."Bir þeyler yükseltmek istiyorum." begin
+			say_title_mob()
+			say("")
+			say("Merhaba!")
+			say("Senin için nesnelerin seviyelerini yükseltip onlarý güçlendirebilirim.")
+			say("Eðer bir nesneni güçlendirmek istiyorsan bana ver.")
+			say("")
+			say_title("Bilgi:")
+			say_reward("Yükseltmek istediðin nesneyi demircinin üzerine sürükleyip býrak.")
+			say("")
+		end
+	end
+end

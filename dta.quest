@@ -1,0 +1,444 @@
+quest dta begin
+	state start begin
+		when login with isdtamap(pc.get_map_index()) == true begin
+			if pc.count_item(71134) == 0 then
+				pc.give_item2(71134,1)
+			end
+			local emp = pc.get_empire()
+			local lvl = pc.get_level()
+			if game.get_event_flag("DTA_active") == 0 and pc.is_gm() == false then
+				warp_to_village()
+			end
+			if pc.get_local_x() > 173 and pc.get_local_x() < 175 and pc.get_local_y() > 712 and pc.get_local_y() < 714 then
+				if lvl < 76 then
+					pc.warp(dta_warp[3][emp],dta_warp[4][emp])
+				else
+					pc.warp(dta_warp[1][emp],dta_warp[2][emp])
+				end
+			end
+			if pc.get_level() < 76 then
+				if pc.getqf("dta_no_notice") == 0 then
+					say_size(350,455)
+					addimage(20, 20, "dragontimeattack.tga")
+					say("")
+					say("")
+					say("")
+					say_title("Mission briefing - Dragon Timeattack!")
+					say("")
+					say("Make your way through the Dragon's Path and reach the")
+					say("Sacred Fire Seal! On your way there you will encounter")
+					say("four boss monsters. Reborn Chief Orc, Giant Plague Carrier,")
+					say("Yellow Tiger Ghost and King Spider. Each of those will")
+					say("drop a Letter Key. In the arena at the end of the path")
+					say("you will find Metins of Murder. Kill every metin")
+					say("to release the Flame King and obtain his Red Flames Key.")
+					say("")
+					say("Obtain the four Letter Keys and the Red Flames Key and")
+					say("wait for the Highlevel Team to obtain the last three letters")
+					say("")
+					say("After your kingdom has found all seven Letter Keys and")
+					say("the Red Flames Key unleash the Red Dragon by spelling the")
+					say("keyword which consists of all seven letters on the keys.")
+					say("")
+					say_reward("Fastest nation to defeat the Red Dragon wins!")
+					say("")
+					say("")
+				end
+			else
+				if pc.getqf("dta_no_notice") == 0 then
+					say_size(350,455)
+					addimage(20, 20, "dragontimeattack.tga")
+					say("")
+					say("")
+					say("")
+					say_title("Mission briefing - Dragon Timeattack!")
+					say("")
+					say("You have to defeat the Sacred Fire Seal! But be aware!")
+					say("This Seal is immune to any kind of physical damage")
+					say("so only magic can damage it! You need to call your")
+					say("bravest magicians in your nation to defeat this obstacle!")
+					say("")
+					say("After the Seal is broken, Metins of Devastation will appear.")
+					say("This Metin is guarded by the mighty Fierce Shadow Hae-Tae!")
+					say("Kill all of them to acquire three of the seven letter keys!")
+					say("Then wait for the lowlevel team of your nation to obtain")
+					say("the four other letter keys and the Red Flames Key.")
+					say("")
+					say("After your kingdom has found all seven Letter Keys and")
+					say("the Red Flames Key unleash the Red Dragon by spelling the")
+					say("keyword which consists of all seven letters on the keys.")
+					say("")
+					say_reward("Fastest nation to defeat the Red Dragon wins!")
+					say("")
+					say("")
+				end
+			end
+		end
+		
+		when login with isdtamap(pc.get_map_index()) == false begin
+			pc.setqf("dta_no_notice",0)
+			if game.get_event_flag("DTA_finished_e"..tostring(pc.get_empire())) == 1 then
+				pc.remove_item(71134,pc.count_item(71134))
+				for i = 1,26,1 do
+					pc.remove_item(90052+i,pc.count_item(90052+i))
+				end
+			end
+			if game.get_event_flag("DTA_active") == 1 and game.get_event_flag("DTA_finished_e"..tostring(pc.get_empire())) == 0 then
+				q.set_icon("scroll_open_blue.tga")
+				send_letter("*Dragon Timeattack")
+			end
+		end
+		
+		when logout with isdtamap(pc.get_map_index()) == true begin
+			pc.setqf("dta_no_notice",1)
+		end
+		
+		when 71134.use begin
+			local emp = pc.get_empire()
+			local lvl = pc.get_level()
+			if lvl < 76 then
+				pc.setqf("dta_no_notice",1)
+				pc.warp(dta_warp[3][emp],dta_warp[4][emp])
+			else
+				pc.setqf("dta_no_notice",1)
+				pc.warp(dta_warp[1][emp],dta_warp[2][emp])
+			end
+		end
+		
+		when button or info begin
+			local emp = pc.get_empire()
+			say_size(350,360)
+			addimage(20, 18, "dragontimeattack.tga")
+			say("")
+			say("")
+			say("")
+			say("")
+			say_reward("Dragon Timeattack is currently running!")
+			say("")
+			say("Hello young hero!")
+			say("In the secred Sealed Cavern in the darkest corners")
+			say("of our nation a dark force is about to awaken!")
+			say("There is no way to restore the Seals...")
+			say("We have to break the Seals and bring in our strongest")
+			say("warriors and defeat this Red Dragon once and for all!")
+			say("")
+			say_reward("Level 40 required to participate in Dragon Timeattack.")
+			say("")
+			if pc.get_level() < 40 then
+				say("You are not strong enough to participate")
+				say("but pray for the success of your kingdom!")
+				say("")
+			else
+				local enter = select("Enter the Event","Close")
+				if enter == 1 then
+					if pc.get_level() < 76 then
+						pc.warp(dta_warp[3][emp],dta_warp[4][emp])
+					else
+						pc.warp(dta_warp[1][emp],dta_warp[2][emp])
+					end
+				end
+			end
+		end
+		
+		when 20086.chat."GM: Administrate Dragon Timeattack" with pc.is_gm() begin
+			if game.get_event_flag("DTA_active") < 1 then
+				say_title("Start Dragon Timeattack Event")
+				say("")
+				say("Do you want to start the event?")
+				say("")
+				local a = select("Yes", "Cancel")
+				if a == 1 then
+					game.set_event_flag("DTA_active", 1)
+					game.set_event_flag("DTA_finished_e1",0)
+					game.set_event_flag("DTA_finished_e2",0)
+					game.set_event_flag("DTA_finished_e3",0)
+					local kw = number(1,17)
+					DTA_keyword = kw
+					local mnum = number(2,4)
+					DTA_metin = mnum
+					DTA_finish = 0
+					DTA_MetinKills[1][1] = 0
+					DTA_MetinKills[1][2] = 0
+					DTA_MetinKills[1][3] = 0
+					DTA_MetinKills[2][1] = 0
+					DTA_MetinKills[2][2] = 0
+					DTA_MetinKills[2][3] = 0
+					DTA_keystates[1] = 0
+					DTA_keystates[2] = 0
+					DTA_keystates[3] = 0
+					DTA_winners = {"nil","nil","nil"}
+					DTA_bosskills = {0,0,0}
+					DTA_FlameKilled = {0,0,0}
+					DTA_position = 1
+					notice_all("A dark force is about to wreak havoc upon the lands...!")
+					notice_all("Dragon Timeattack has started! - Talk to the Archer Guardian to participate!")
+					regen_in_map(209,"data/DTA/monster_regen.txt")
+					regen_in_map(210,"data/DTA/monster_regen.txt")
+					regen_in_map(211,"data/DTA/monster_regen.txt")
+				end
+			else
+				say_title("Abort Dragon Timeattack")
+				say("")
+				say("Are you sure you want to abort")
+				say("Dragon Timeattack?")
+				say("")
+				local DTAend =select("Yes", "No")
+				if DTAend == 1 then
+					notice_all("Dragon Timeattack has been aborted.")
+					notice_all("Players will be sent home in 5 seconds.")
+					kill_all_in_map(209)
+					kill_all_in_map(210)
+					kill_all_in_map(211)
+					warp_all_to_village(209,5)
+					warp_all_to_village(210,5)
+					warp_all_to_village(211,5)
+					game.set_event_flag("DTA_active",0)
+					say_title("End of Dragon Timeattack Event")
+					say("")
+					say("The abort has been performed.")
+					say("")
+				else
+					say_title("End of Dragon Timeattack Event")
+					say("")
+					say("Allright, then we go on with the event.")
+					say("")
+					say("")
+				end
+			end
+		end
+			
+		when 11001.chat."Join Dragon Timeattack" or 11003.chat."Join Dragon Timeattack" or 11005.chat."Join Dragon Timeattack" with game.get_event_flag("DTA_active") == 1 begin
+			local emp = pc.get_empire()
+			local lvl = pc.get_level()
+			if lvl < 40 then
+				say_title("The hunt for the Red Dragon")
+				say("")
+				say("Your Level is too low to face the Red Dragon.")
+				say("I'm sorry but I can't let you pass.")
+				say("It's for your own security.")
+				say("")
+				say_reward("You need to be at least Level 40 to join.")
+				say("")
+			else
+				say_title("The hunt for the Red Dragon")
+				say("")
+				say("Hello young hero!")
+				say("In the secred Sealed Cavern in the darkest corners")
+				say("of our nation a dark force is about to awaken!")
+				say("There is no way to repair the Seals...")
+				say("We have to break the Seals and bring in our strongest")
+				say("warriors and defeat this Red Dragon once and for all!")
+				say("")
+				say("But let me tell you that it still is dangerous, are you")
+				say("sure you want to enter?")
+				say("")
+				local b = select("Yes, bring it on!", "No, I'm scared!")
+				if b == 1 then
+					if lvl < 76 then
+						pc.warp(dta_warp[3][emp],dta_warp[4][emp])
+					else
+						pc.warp(dta_warp[1][emp],dta_warp[2][emp])
+					end
+				end
+			end
+		end
+		
+		when 693.kill or 993.kill or 1304.kill or 2092.kill with isdtamap(pc.get_map_index()) == true begin
+			DTA_bosskills[pc.get_empire()] = DTA_bosskills[pc.get_empire()]+1
+			local key_id = get_next_char_num()
+			if key_id != 0 then
+				game.drop_item_with_ownership(dta_keywords[DTA_keyword][key_id])
+			end
+		end
+		
+		when 8041.kill with isdtamap(pc.get_map_index()) == true begin
+			DTA_MetinKills[1][pc.get_empire()] = DTA_MetinKills[1][pc.get_empire()] + 1
+			if DTA_MetinKills[1][pc.get_empire()] == DTA_metin or DTA_MetinKills[1][pc.get_empire()] == 1 or DTA_MetinKills[1][pc.get_empire()] == 5 then
+				local key_id = get_next_char_num()
+				if key_id != 0 then
+					game.drop_item_with_ownership(dta_keywords[DTA_keyword][key_id])
+				end
+			end
+		end
+		
+		when 8014.kill with isdtamap(pc.get_map_index()) == true begin
+			DTA_MetinKills[2][pc.get_empire()] = DTA_MetinKills[2][pc.get_empire()] + 1
+			if DTA_MetinKills[2][pc.get_empire()] == 5 then
+				mob.spawn(2206,164,714,1,0,1)
+			end
+		end
+			
+		when 20368.kill with isdtamap(pc.get_map_index()) == true begin
+			regen_in_map(pc.get_map_index(),"data/DTA/devastation_regen.txt")
+			notice_in_map("The Highlevel Team has killed the Sacred Fire Seal!")
+			notice_in_map("Defeat all Metin of Devastation to obtain three Letter Keys!")
+		end
+		
+		when 2206.kill with isdtamap(pc.get_map_index()) == true begin
+			game.drop_item_with_ownership(90079)
+			notice_in_map("The Lowlevel Team has obtained the Red Flames Key.")
+			notice_in_map("Form the keyword with the seven Letter Keys and unleash the Red Dragon!")
+		end
+		
+		when 20370.take with item.vnum == 90079 begin
+			if DTA_MetinKills[1][pc.get_empire()] < 5 then
+				say_title("The Sacred Fire Seal")
+				say("")
+				say("Your nation has not defeated all Metins yet.")
+				say("With the power of the Metins of Devastation,")
+				say("this Seal remains too strong to be broken.")
+				say("")
+				say_reward("Destroy all Metin of Devastation first!")
+				say("")
+				return;
+			elseif DTA_bosskills[pc.get_empire()] < 4 then
+				say_title("The Sacred Fire Seal")
+				say("")
+				say("Your nation has not defeated all Bosses yet.")
+				say("With the power of the boss monsters alive")
+				say("this seal remains too strong to be broken.")
+				say("")
+				say_reward("Defeat all boss monsters first!")
+				say("")
+				return;
+			else
+				say_title("The Sacred Fire Seal")
+				say("")
+				say("This Seal was created by the ancestors of this land")
+				say("to protect it from the dark force that sleeps within")
+				say("the Sealed Caverns. Only the magic keyword can dispell")
+				say("this magic seal and unleash the evil dragon.")
+				say("")
+				local hint = select("Spell the Keyword", "Ask for help")
+				if hint == 1 then
+					say_title("The Sacred Fire Seal:")
+					say("")
+					say("Spell out the magic keyword of our ancestors")
+					say("to dispell this last Sacred Seal and unleash")
+					say("the dark force that is threatening the lands!")
+					say("")
+					say_reward("IMPORTANT WARNING!")
+					say_reward("Digit the keyword ONLY in CAPITAL letters!")
+					say("")
+					local answer = input()
+					local correct = tostring(dta_keywords[DTA_keyword][1])
+					if answer == correct then
+						npc.purge()
+						mob.spawn(2291, 120, 488, 1, 1, 1)
+						notice_in_map("The last seal is broken and the Red Dragon unleashed!")
+						item.remove()
+					else
+						say_title("Keyword incorrect")
+						say("")
+						say("You failed to spell the correct keyword.")
+						say("As penality your Red Flames Key is gone")
+						say("If you want a new one you will have to kill")
+						say("the mighty Flame King once more!")
+						say("")
+						item.remove()
+						mob.spawn(2206,164,714,1,0,1)
+					end
+				else
+					say_title("Ghost of an ancestor:")
+					say("")
+					say("So you decided to sacrifice your key in order")
+					say("to receive a guide from us to the magic word that")
+					say("dispels this seal? Your wish shall be granted!")
+					say("")
+					say(""..dta_keywords[DTA_keyword][9].."")
+					say("")
+					say("But the price is high for that information..")
+					say("The dark force who has given you this key will only")
+					say("reappear in a minute from now, I pray it won't be too late.")
+					say("")
+					say_reward("Please note that I can not give you another hint.")
+					say("")
+					item.remove()
+					timer("red_flame_pen",60)
+				end
+			end
+		end
+		
+		when red_flame_pen.timer begin
+			mob.spawn(2206,164,714,1,0,1)
+		end
+		
+		when 2291.kill with isdtamap(pc.get_map_index()) == true begin
+			notice_in_map("You have successfully killed the Red Dragon!")
+			notice_in_map("The Flames of Grief who pray for their fallen god try to trap you in the Sealed Cavern!")
+			notice_in_map("Kill them and escape as fast as you can!")
+			kill_all_in_map(pc.get_map_index())
+			DTA_winners[DTA_position] = ""..locale.empire_names[pc.get_empire()]..""
+			DTA_position = DTA_position+1
+			regen_in_map(pc.get_map_index(),"data/DTA/flame_of_grief.txt")
+		end
+		
+		when 2226.kill with isdtamap(pc.get_map_index()) == true begin
+			local potion = number(1,2)
+			if potion == 1 then
+				game.drop_item_with_ownership(72723)
+			else
+				game.drop_item_with_ownership(72724)
+			end
+			DTA_FlameKilled[pc.get_empire()] = DTA_FlameKilled[pc.get_empire()]+1
+			if DTA_FlameKilled[pc.get_empire()] == 30 then
+				notice_in_map("You defeated all the Flames of Grief - Time to escape from the Sealed Cavern!")
+				timer("warpout_e"..tostring(pc.get_empire()),20)
+				game.set_event_flag("DTA_finished_e"..tostring(pc.get_empire()),1)
+				DTA_finish = DTA_finish+1
+				if DTA_finish == 3 then
+					game.set_event_flag("DTA_active",0)
+					DTA_finish = 0
+					notice_all("Dragon Timeattack has ended - Congratulations to the winners!")
+					notice_all("1st Place: "..DTA_winners[1].." Kingdom.")
+					notice_all("2nd Place: "..DTA_winners[2].." Kingdom.")
+					notice_all("3rd Place: "..DTA_winners[3].." Kingdom.")
+				end
+			end
+		end
+		
+		when 2227.kill with isdtamap(pc.get_map_index()) == true begin
+			local potion = number(1,2)
+			if potion == 1 then
+				game.drop_item_with_ownership(72725)
+			else
+				game.drop_item_with_ownership(72724)
+			end
+			DTA_FlameKilled[pc.get_empire()] = DTA_FlameKilled[pc.get_empire()]+1
+			if DTA_FlameKilled[pc.get_empire()] == 30 then
+				notice_in_map("You defeated all the Flames of Grief - Time to escape from the Sealed Cavern!")
+				timer("warpout_e"..tostring(pc.get_empire()),20)
+				game.set_event_flag("DTA_finished_e"..tostring(pc.get_empire()),1)
+				DTA_finish = DTA_finish+1
+				if DTA_finish == 3 then
+					game.set_event_flag("DTA_active",0)
+					DTA_finish = 0
+					notice_all("Dragon Timeattack has ended - Congratulations to the winners!")
+					notice_all("1st Place: "..DTA_winners[1].." Kingdom.")
+					notice_all("2nd Place: "..DTA_winners[2].." Kingdom.")
+					notice_all("3rd Place: "..DTA_winners[3].." Kingdom.")
+				end
+			end
+		end
+		
+		when warpout_e1.timer or warpout_e2.timer or warpout_e3.timer begin
+			warp_all_to_village(pc.get_empire() + 208, 1)
+		end
+		
+		when 20086.chat."GM: Last Dragon Timeattack Winners" with pc.is_gm() begin
+			say_title("Last Dragon Timeattack Winners")
+			say("")
+			say("1st Place: "..DTA_winners[1].." Kingdom.")
+			say("2nd Place: "..DTA_winners[2].." Kingdom.")
+			say("3rd Place: "..DTA_winners[3].." Kingdom.")
+			say("")
+			local select = select("Announce the result","Close.")
+			if select == 1 then
+				notice_all("The Results of the last Dragon Timeattack!")
+				notice_all("1st Place: "..DTA_winners[1].." Kingdom.")
+				notice_all("2nd Place: "..DTA_winners[2].." Kingdom.")
+				notice_all("3rd Place: "..DTA_winners[3].." Kingdom.")
+			end
+		end
+	end
+end

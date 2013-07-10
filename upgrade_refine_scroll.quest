@@ -1,0 +1,196 @@
+quest upgrade_refine_scroll begin
+    state start begin
+        when 20016.chat."War God Blessing Scroll" begin
+            say_title("Blacksmith:")
+            say("")
+            ----"123456789012345678901234567890123456789012345678901234567890"| 
+            say("The mysterious War God Blessing Scroll can upgrade items")
+            say("from +0 to +3 with a guaranteed success!")
+            say("")
+            say("They do not work on +4 and higher items though.")
+            say("")
+            wait()
+            if pc.count_item(70035)==0 then
+                say_title("Blacksmith:")
+                say("")
+                say("To produce these, you need Perpetual Iron.")
+                say("")
+                say_item("Perpetual Iron", 70035, "")
+                say("")
+                wait()
+            end
+            if pc.count_item(25040)==0 then
+                say_title("Blacksmith:")
+                say("")
+                say("Additionally, you need a Blessing Scroll.")
+                say("")
+                say_item("Blessing Scroll", 25040, "")
+                say("")
+                wait()
+            end
+
+            say_title("Blacksmith:")
+            say("")
+            say("You have all items needed?")
+            say("You want to produce one?")
+            say("Then you also need 200.000 Yang.")
+            say("")
+            say("If you have a Blessing Scroll and ")
+            say("Perpetual Iron, you can produce")
+            say("a War God Blessing Scroll.")
+            say("Do you want to produce a scroll?")
+            say("")
+            local s=select("Yes", "No")
+            if 1==s then
+                if pc.get_gold() < 200000 then
+                    say_title("Information")
+                    say("")
+                    say_reward("You don't have enough Yang.")
+                    say("")
+                elseif pc.count_item(70035)>0 and pc.count_item(25040)>0 then
+                    pc.remove_item(70035)
+                    pc.remove_item(25040)
+                    pc.changegold(-200000)
+                    pc.give_item2(71021)
+                    say_title("Blacksmith:")
+                    say("")
+                    say("You produced a War God Blessing Scroll!") 
+                    say("")
+					say("Use this masterpiece of metalcraft wisely!")
+					say("")
+                    say_item("A War God Blessing Scroll", 71021, "")
+					say("")
+                else
+                    say_title("Blacksmith:")
+                    say("")
+                    say("Your attempt to manufacture the scroll did not work.")
+                    say("You didn't have all items.")
+                    say("")
+                end
+            end
+        end
+		
+        when 20016.chat."Dragon God Blessing Scroll" begin
+            say_title("Blacksmith:")
+            say("")
+            say("A Dragon God Blessing Scroll increases the rate of success.")
+            say("Even if the enhancement fails only the quality level")
+            say("decreases but you still keep your item!")
+            say("This mysterious item is a very valuable scroll for true")
+			say("craftsmanship!")
+			say("")
+            wait()
+            if pc.count_item(71026)==0 then
+                say_title("Blacksmith:")
+                say("")
+                say("To produce this, you need Magic Metal!")
+                say("")
+                say_item("Magic Metal", 71026, "")
+                say("")
+                wait()
+            end
+            if pc.count_item(25040)==0 then
+                say_title("Blacksmith")
+                say("")
+                say("To produce this, you need a Blessing Scroll")
+                say("")
+                say_item("Blessing Scroll", 25040,"")
+                say("")
+                wait()
+            end
+            say_title("Blacksmith:")
+            say("")
+            say("Do you have all needed items?")
+            say("Do you want to produce one of these?")
+            say("If you use a Blessing Scroll and Magic Metal")
+            say("you can produce a Dragon God Blessing Scroll!")
+            say("")
+            local s=select("Yes", "No")
+            if 1==s then
+                if pc.count_item(71026)>0 and pc.count_item(25040)>0 then
+                    pc.remove_item(71026)
+                    pc.remove_item(25040)
+                    pc.give_item2(71032)
+                    say_title("Blacksmith:")
+                    say("")
+                    say("You produced a Dragon God Blessing Scroll!")
+                    say("")
+					say("Use this magic scroll wisely!")
+                    say("")
+                    say_item("Dragon God Blessing Scroll", 71032, "")
+					say("")
+                else
+                    say_title("Blacksmith:")
+                    say("")
+                    say("Your attempt to produce the Dragon God")
+                    say("Blessing Scroll failed because you didn't have all")
+                    say("items.")
+                    say("")
+                end
+            end
+        end
+
+        when 20016.chat."Produce a Master Compass" begin
+                say_title("Blacksmith:")
+                say("")
+				----"123456789012345678901234567890123456789012345678901234567890"|
+                say("Have you heard of the stone called Stone of the Blacksmith?")
+                say("That's a stone made of the blood and sweat of craftsmenship!")
+                say("If you bring me the Stone of the Blacksmith and a")
+                say("Blessing Scroll, I can create a Master Compass for you!")
+                say("This secret upgrading scroll was passed in my family")
+                say("for generations! It has the same function as the")
+                say("Dragon God Blessing Scroll, but the rate of success is")
+                say("even higher!")
+                say("")
+                wait()
+                if pc.count_item(71025) == 0 then
+                    say_title("Blacksmith:")
+                        say("")
+                        say("To produce this you need a Stone of the Blacksmith!")
+                        say("")
+                        say_item("Stone of the Blacksmith", 71025, "")
+                        say("")
+                        wait()
+                end
+                if pc.count_item(25040) == 0 then
+                        say_title("Blacksmith:")
+                        say("")
+                        say("To produce it you need a Blessing Scroll!")
+                        say("")
+                        say_item("Blessing Scroll", 25040, "")
+                        say("")
+                        wait()
+                end
+                say_title("Blacksmith:")
+                say("")
+                say("Do you have all needed items?")
+                say("So, now: Do you want to have the Master Compass")
+                say("passed on by my family for generations?")
+                say("")
+                local s = select("Yes", "No")
+                if 1 == s then
+                        if pc.count_item(71025) > 0 and pc.count_item(25040) > 0 then
+                                pc.remove_item(71025)
+                                pc.remove_item(25040)
+                                pc.give_item2(70039)
+                                say_title("Blacksmith:")
+                                say("")
+                                say("You produced the Master Compass successfully!")
+								say("")
+                                say("Use it well! Ha ha ha!")
+                                say("")
+                                say_item("Master Compass", 70039, "")
+								say("")
+                        else
+                                say_title("Blacksmith:")
+                                say("")
+                                say("It didn't work because you didn't")
+                                say("have all items.")
+                                say("")
+                        end
+                end
+        end
+
+    end
+end

@@ -1,0 +1,210 @@
+
+quest npc_talk begin
+    state start begin
+        when 20354.click begin
+            say_title("City Guardian:")
+            say("")
+            ----"123456789012345678901234567890123456789012345678901234567890"|
+            say("Be quiet and maintain your discipline. Behave and don't")
+            say("start any trouble, and respect your fellow citizens.")
+            say("")
+            say("Understood?")
+            say("")
+        end
+        when 20008.chat."Welcome" begin
+            say_title("Octavio:")
+            say("")
+            ----"123456789012345678901234567890123456789012345678901234567890"|
+            say("Welcome! Our restaurant is known among gourmets all")
+            say("over the kingdom. Come in and try out.")
+            say("")
+
+            if math.random(2) == 1 then
+                wait()
+                say_pc_name()
+                say("")
+                say("For a famous restaurant, the decoration looks")
+                say("surprisingly simple.")
+                say("")
+            end
+        end
+        when 20005.chat."Clay Pottery" begin
+            say_title("Yonah:")
+            say("")
+            ----"123456789012345678901234567890123456789012345678901234567890"|
+            say("Concerning goods, the manufacturing is best in the East,")
+            say("outside this continent.")
+            say("")
+            say("Once I saw some potter's goods from there and was very")
+            say("impressed. I'm still investigating their goods.")
+            say("")
+            say("I want to know what kind of trick they use.")
+            say("")
+        end
+        when 20017.chat."At dawn to the mountains..." begin
+            say_title("Yu-Hwan:")
+            say("")
+            ----"123456789012345678901234567890123456789012345678901234567890"|
+            say("(sings) At dawn to the mountains we'll hike, falera...")
+            say("")
+            say("I am just a musician, so I don't get involved in the war.")
+            say("But without a country to protect me, this freedom can't")
+            say("make me happy.")
+            say("")
+        end
+        when 20023.chat."Oh, Adventurer" begin
+            say_title("Mr. Soon:")
+            say("")
+            say("Oh, Adventurer!")
+            say("")
+            ----"123456789012345678901234567890123456789012345678901234567890"|
+            say("The world is full of trouble, and only through knowledge")
+            say("you can survive.")
+            say("")
+            say("Always honour your books. In bad times they will help")
+            say("you. Believe me!")
+            say("")
+        end
+
+        when 20020.chat."Once" begin
+            say_title("Balso:")
+            say("")
+            ----"123456789012345678901234567890123456789012345678901234567890"|
+            say("I was once a member of the Black Wind gang but I turned")
+            say("my back on their violent ways.")
+            say("")
+            say("They murder innocent people and I couldn't bear it")
+            say("any longer...")
+            say("")
+
+            if math.random(2) == 1 then
+                wait()
+                say_pc_name()
+                say("")
+                say("You come here to live a peaceful life?")
+                say("")
+                wait()
+                say_title("Balso, the traitor:")
+                say("")
+                say("I won't do anything evil anymore, not even in a lawless")
+                say("world. People shouldn't call me a traitor.")
+                say("")
+                say("Do you have some Yang for me?")
+                say("")
+            end
+        end
+
+        when 20011.chat."In this wide world" begin
+            say_title("Uriel, the wise:")
+            say("")
+            say("There are so many things to learn in this wide")
+            say("world. Ignorance equipped with military power")
+            say("is a bad combination. You don't want to")
+            say("live like these ignorant soldiers, right?")
+            say("Knowledge is power!")
+            say("")
+        end
+
+        when 20018.chat."In this dangerous world" begin
+            say_title("Baek-Go:")
+            say("")
+            say("In this dangerous world")
+            say("many people are injured every day.")
+            say("We simply don't have enough medicine and doctors.")
+            say("The times are hard! There might be a chance")
+            say("you could help me later.")
+            say("")
+        end
+
+        when 20019.chat."Hmm, since the MetinStones are fallen" begin
+            say_title("Yang-Shin, the hunter:")
+            say("")
+            say("Hmm, since the Metin Stones have fallen, the animals ")
+            say("became wild. Nowadays it can be deadly")
+            say("just hunting chickens. It is a dangerous")
+            say("time for hunters.")
+            say("")
+        end
+
+        when 20006.chat."These days my brother is" begin
+            say_title("Mirine:")
+            say("")
+            say("These days my brother is travelling")
+            say("a lot and I worry about him.")
+            say("")
+        end
+
+        when 20012.chat."Because of the war" begin
+            say_title("Yu-Rang, the rice cake salesperson:")
+            say("")
+            say("With the war it is difficult to sell some")
+            say("rice cakes. Because of the bandits I have lost")
+            say("lots of customers.")
+            say("I just don't know what I can do more for living.")
+            say("")
+        end
+
+        when 20021.chat."The sweet dreams of a newly married couple" begin
+            say_title("Ariyoung:")
+            say("")
+            say("I couldn't know, that our sweet dreams as")
+            say("a newly married couple would be so ruthlessly destroyed")
+            say("Sob, Sob... please revenge his death.")
+            say("")
+        end
+        when 20003.chat."Oh no, this child" begin
+            say_title("Ah-Yu:")
+            say("")
+            say("He is screaming once again...")
+            say("")
+            say("I don't know if he wants some sweets or... ohh no!")
+            say("")
+        end
+        when 20002.chat."My so called husband" begin
+            say_title("Aranyo:")
+            say("")
+            say("My so called husband is married to his books. He")
+            say("barely even looks at me anymore.")
+            say("")
+            say("And I'm not an ugly woman!")
+            say("")
+        end
+        when 20010.chat."Because of the war" begin
+            say_title("Wandering trader:")
+            say("")
+            say("Since the war has started, our")
+            say("business has been very bad.")
+            say("The Trade Union was once very powerful,")
+            say("but those times are over now. We can no longer")
+            say("ignore the wild animals, the White-Oath warriors ")
+            say("and the Black Gang, like we were used")
+            say("to.")
+            say("")
+        end
+        when 20014.chat."Oh ... Harang" begin
+            say_title("Taurean:")
+            say("")
+            say("Harang is a bad girl!")
+            say("I hate her! I'm weak and she")
+            say("often picks on me!")
+            say("")
+
+            if math.random(2) == 1 then
+                wait()
+                say_pc_name()
+                say("")
+                say("You are a man and have muscles.")
+                say("Train them a bit!")
+                say("")
+            end
+        end
+        when 20024.chat."Damn Taurean" begin
+            say_title("Harang:")
+            say("")
+            say("Damn Taurean!")
+            say("If he doesn't come here voluntary I will")
+            say("beat him up!")
+            say("")
+        end
+    end
+end

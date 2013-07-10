@@ -1,0 +1,217 @@
+quest main_quest_lv6 begin
+        state start begin
+        end
+        state run begin
+                when login or levelup or enter with pc.get_level() >= 6 begin
+                        set_state( gototeacher )
+                end
+        end
+        state gototeacher begin
+                when letter begin
+                        local v=find_npc_by_vnum(20354)
+                        if 0==v then
+                        else
+                                target.vid("__TARGET__", v, "Go to the City Guard")
+                        end
+                end
+                when letter begin
+                        send_letter("Go to the City Guard")
+                end
+                when button or info begin
+               		----"123456789012345678901234567890123456789012345678901234567890"|
+                        say_title("Go to the City Guard")
+                        say("")
+                        say("I think the Blacksmith has a favour you can do for him. As")
+                        say("reward you will get Yang, Experience and an upgrade item.")
+                        say("")
+                        say_item_vnum(30070)
+                        say("Items like this can be used to upgrade your equipment.")
+                        say("")
+                end
+                when __TARGET__.target.click begin
+                        target.delete("__TARGET__")
+			----"123456789012345678901234567890123456789012345678901234567890"|
+                        say_title("City Guard:")
+                        say("")
+                        say("Hey, you! Don't hang around in the village and don't say")
+                        say("there is nothing to do! You need more training!")
+                        say("")
+                        say("In these troubled days, training is the only way to")
+                        say("increase your chances of survival!")
+			say("")
+                        wait()
+                        say_title("City Guard:")
+                        say("")
+                        say("Go to the Blacksmith. He said he needs help. Hurry up!")
+                        say("He is a very impatient man.")
+                        say("")
+                        say("Why are you still standing here? Go now!")
+                        say("")
+                        set_state( gotosmith )
+                end
+        end
+
+
+        state gotosmith begin
+                when letter begin
+                        local v=find_npc_by_vnum(20016)
+                        if 0==v then
+                        else
+                                target.vid("__TARGET__", v, "Find the Blacksmith")
+                        end
+                end
+                when letter begin
+                        send_letter("Favour for the Blacksmith")
+                end
+                when button or info begin
+                        say_title("Favour for the Blacksmith")
+                        say("")
+                        say("Go to the Blacksmith. He needs your help.")
+                        say("")
+                end
+
+                when __TARGET__.target.click begin
+                        target.delete("__TARGET__")
+
+                        say_title("Blacksmith:")
+                        say("")
+			----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Finally. Are you the help I was promised? I begun to fear")
+                        say("that you would never arrive.")
+                        say("")
+                        say("You look like a green adventurer, but I'm sure that you can")
+                        say("take care of this little job. It's not a difficult job and")
+                        say("I don't expect it will take long.")
+                        say("")
+                        wait()
+                        say_title("Blacksmith:")
+                        say("")
+                        say("I was expecting the Storekeeper to deliver me a Pig Nose,")
+                        say("but it is still not here.")
+                        say("")
+                        say("Please go get me that Pig Nose. I am in a hurry to get it,")
+			say("so that I can continue my work.")
+			say("")
+                        say_item_vnum(30003)
+                        say("")
+                        set_state( gotowarehousekeeper )
+
+                end
+        end
+        state gotowarehousekeeper begin
+                when letter begin
+                        local v=find_npc_by_vnum(9005)
+                        if 0==v then
+                        else
+                                target.vid("__TARGET__", v, "Find the Storekeeper.")
+                        end
+                end
+                when letter begin
+                        send_letter("Go to the Storekeeper.")
+                end
+                when button or info begin
+                        say_title("Go to the Storekeeper.")
+                        say("")
+                        say("Go to the Storekeeperm ask him for the Pig Nose,")
+                        say("and bring it to the Blacksmith.")
+                        say("")
+                        say_item_vnum(30003)
+                        say("")
+                end
+                when __TARGET__.target.click begin
+                        target.delete("__TARGET__")
+			----"123456789012345678901234567890123456789012345678901234567890"|
+                        say_title("The Storekeeper:")
+                        say("")
+                        say("Welcome! I'm the Storekeeper of this village.")
+                        say("")
+                        say("If you carry too much stuff with you, it can be stored in")
+                        say("my warehouse. That is very practical.")
+                        say("")
+                        wait()
+                        say_title("The Storekeeper:")
+                        say("")
+                        say("Ah! The Blacksmith sent you for the Pig Nose!")
+                        say("")
+                        say_item_vnum(30003)
+                        say("Sorry. I'm getting old and forgetful. Here you go. Deliver")
+                        say("it to the Blacksmith. I hope to see you later.")
+                        say("")
+                        set_state( gotosmith2 )
+                end
+        end
+        state gotosmith2 begin
+                when letter begin
+                        local v=find_npc_by_vnum(20016)
+                        if 0==v then
+                        else
+                                target.vid("__TARGET__", v, "Find the Blacksmith")
+                        end
+                end
+                when letter begin
+                        send_letter("Return to the Blacksmith.")
+                end
+                when button or info begin
+                        say_title("Return to the Blacksmith.")
+                        say("")
+                        say("Deliver the Pig Nose of the Storekeeper to the")
+                        say("Blacksmith.")
+                        say("")
+                        say_item_vnum(30003)
+                        say("")
+                end
+                when __TARGET__.target.click begin
+                        target.delete("__TARGET__")
+
+                        say_title("Blacksmith:")
+                        say("")
+			----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Good, good, you were faster than I expected!")
+                        say("")
+                        say("If you are not a good fighter, you better remain that fast.")
+                        say("I might have some information for a new adventurer like you.")
+                        say("")
+                        say("Do you know anything about upgrades? Of course not! You")
+                        say("are a new adventurer!")
+                        say("")
+                        say("If you give me a piece of your armour I can upgrade its")
+                        say("quality, it will only require some Yang.")
+                        say("")
+                        wait()
+                        say_title("Blacksmith:")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Well, to upgrade an item up to +3 you just need to pay some")
+                        say("Yang, but to go to +4 or higher it might require the use of")
+                        say("an additional object, for example the Pig nose that you")
+                        say("delivered to me.")
+                        say("")
+                        say("Always make sure that the item you want to upgrade is")
+                        say("something you can afford to be destroyed. You might")
+                        say("succeed, but accidents happen!")
+                        say("")
+			say("If you have time, come back. I can make some good weapons!")
+                        say("")
+                        wait()
+                        say_title("Reward")
+                        say("")
+                        say_reward("Experience: 3000")
+                        say_reward("Yang: 2000")
+                        say_reward("Items: "..item_name(30053))
+                        say_item_vnum(30070)
+                        say("")
+
+                        pc.give_exp2(3000)
+                        pc.change_money(2000)
+                        pc.give_item2(30053 , 1)
+
+                        clear_letter()
+                        set_state(__COMPLETE__)
+                        set_quest_state("main_quest_lv7", "run")
+
+                end
+        end
+        state __COMPLETE__ begin
+        end
+
+end

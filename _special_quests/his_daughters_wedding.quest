@@ -1,0 +1,368 @@
+quest his_daughters_wedding begin
+	state start begin
+		when login or enter or levelup with pc.get_level() >= 18 and pc.get_level() <= 23 begin
+			set_state(information)
+		end
+	end
+	
+	state information begin
+		when letter begin
+			send_letter("Kızının Düğünü")
+			local v=find_npc_by_vnum(20008)
+			if 0==v then
+			else
+				target.vid("__TARGET__", v, "Octavio")
+			end
+		end
+		
+		when button or info begin
+			say_title("Kızının Düğünü:")
+			say("")
+			say("Octavio seni arıyor!")
+			say("")
+			say("Yanına git ve onu gör.")
+			say("")
+			wait()
+		end
+		
+		when __TARGET__.target.click or 20008.chat."Kızının Düğünü" begin
+			target.delete("__TARGET__")
+			----"123456789012345678901234567890123456789012345678901234567890"|
+			say_title_mob()
+			say("")
+			say("Merhaba Gezgin!")
+			say("")
+			say("Çok mutluyum! Sonunda kızım evleniyor.")
+			say("")
+			say("Şu an dünyanın en güzel buketine ihtiyacım var!")
+			say("Sadece bu mükemmel olay için!")
+			say("")
+			wait()
+			say_title_mob()
+			say("")
+			say("Yaşlı Kadın nasıl mükemmel bir buket")
+			say("hazırlanacağını biliyor. Ama şu an")
+			say("evlilik hazırlıklarından dolayı çok meşgulüm!")
+			say("")
+			say("Ona gidip kızım için bir buket hazırlamasını ")
+			say("söyler misin?")
+			say("")
+			say("Seni ödüllendireceğim!")
+			say("")
+			local accept=select("Evet, bunu yapacağım.", "Hayır, meşgulum.")
+			if accept == 1 then
+				say_title_mob()
+				say("")
+				say("Çok teşekkürler! Sen benim kahramanımsın!")
+				say("")
+				wait()
+				set_state(getbouquet)
+			elseif accept == 2 then
+				say_title("Kızının Düğünü:")
+				say("")
+				say("Bu ricayı gerçekten reddetmek istiyor musun?")
+				say("")
+				local abort=select("Evet", "Hayır")
+				if abort == 1 then
+					say_title_mob()
+					say("")
+					say("Eğer ödülüm seni tatmin etmiyorsa bir şey")
+					say("diyemem. Görüşürüz.")
+					say("")
+					set_state(failure)
+				end
+			end
+		end
+	end
+		
+	state getbouquet begin
+		when letter begin
+			send_letter("Kızının Düğünü")
+			local w=find_npc_by_vnum(9006)
+			if 0==w then
+			else
+				target.vid("__TARGET1__", w, "Yaşlı Kadın")
+			end
+		end
+		
+		when button or info begin
+			say_title("Mükemmel Bir Buket:")
+			say("")
+			----"123456789012345678901234567890123456789012345678901234567890"|
+			say(""..mob_name(20008).." seni Yaşlı Kadına gidip")
+			say("Kızının Düğünü için kızına bir Buket yapıp")
+			say("yapamayacağını sormak için gönderdi.")
+			say("")
+		end
+		
+		when __TARGET1__.target.click or 9006.chat."Kızının Düğünü" begin
+			target.delete("__TARGET1__")
+			say_title_mob()
+			say("")
+			say("Merhaba, nasıl yardımcı olabilirim?")
+			say("")
+			say("Düğün için bir çiçek buketi? Ne kadar güzel!")
+			say("")
+			say("Octavionun bu görevi bana verdiği için kendimi")
+			say("onurlu hissediyorum! Sana kesinlikle yardım")
+			say("edeceğim. Ama bu iş için bir kaç malzeme lazım.")
+			say("")
+			wait()
+			say_title_mob()
+			say("")
+			say("Kusursuz bir buket için bu çiçeklerin taptaze")
+			say("olarak toplanması gerekiyor:")
+			say("")
+			say_reward("- 1x Kankırmızı Çiçek")
+			say_reward("- 1x Portakal Rengi Çiçek")
+			say_reward("- 1x Kokulu Sarı Çiçek")
+			say("")
+			say("Unutma, en güzel buket için bunlar gerekiyor!")
+			say("")
+			wait()
+			say_title_mob()
+			say("")
+			say("Hayvanlar bu çiçekleri karnını doyurmak için")
+			say("topluyor. Eğer onlardan bir kaç tanesini avlarsan")
+			say("bu çiçeklerden bulabilirsin.")
+			say("")
+			say("Unfortunately the are only found in the "..areaname[pc.get_empire()][3].." area")
+			say("and it's dangerous for an old lady to go there.")
+			say("")
+			say("Bring me those three flowers and I will create the")
+			say("bouquet for Octavio!")
+			say("")
+			set_state(gatherflower1)
+		end
+	end
+	
+	state gatherflower1 begin
+		when letter begin
+			send_letter("Kankırmızı Çiçek")
+		end
+		
+		when button or info begin
+			say_title("Kızının Düğünü:")
+			say("")
+			say("In order to create the best flower bouquet for Octavio's")
+			say("daughters wedding, the old lady needs an odorous rose.")
+			say("")
+			say_item_vnum(30169)
+			say_reward("You can get it from Cursed Wild Boar in the "..areaname[pc.get_empire()][3].." Area.")
+			say("")
+		end
+		
+		when 137.kill begin
+			local drop=number(1,10)
+			if drop == 1 and pc.count_item(30169) ==0 then
+				pc.give_item2(30169, 1)
+				say_title("The odorous rose")
+				say("")
+				say("You've found the odorous rose!")
+				say("Next you need a fragant primrose.")
+				say("")
+				say_item_vnum(30170)
+				say("")
+				set_state(gatherflower2)
+			end
+		end
+	end
+	
+	state gatherflower2 begin
+		when letter begin
+			send_letter("The fragant primrose")
+		end
+		
+		when button or info begin
+			say_title("His daughter's wedding:")
+			say("")
+			say("In order to create the best flower bouquet for Octavio's")
+			say("daughters wedding, the old lady needs a fragant primrose.")
+			say("")
+			say_item_vnum(30170)
+			say_reward("You can get it from Cursed Grizzly Bear in the "..areaname[pc.get_empire()][3].." Area.")
+			say("")
+		end
+		
+		when 140.kill begin
+			local drop=number(1,10)
+			if drop == 1 and pc.count_item(30170) ==0 then
+				pc.give_item2(30170, 1)
+				say_title("The fragant primrose")
+				say("")
+				say("You've found the fragant primrose!")
+				say("Next you need a scented sunflower.")
+				say("")
+				say_item_vnum(30171)
+				say("")
+				set_state(gatherflower3)
+			end
+		end
+	end
+		
+	state gatherflower3 begin
+		when letter begin
+			send_letter("The scented sunflower")
+		end
+		
+		when button or info begin
+			say_title("His daughters wedding:")
+			say("")
+			say("In order to create the best flower bouquet for Octavio's")
+			say("daughters wedding, the old lady needs a scented sunflower.")
+			say("")
+			say_item_vnum(30171)
+			say_reward("Get it from Cursed Tigers in the "..areaname[pc.get_empire()][3].." Area.")
+			say("")
+		end
+		
+		when 143.kill begin
+			local drop=number(1,8)
+			if drop == 1 and pc.count_item(30171) ==0 then
+				pc.give_item2(30171, 1)
+				say_title("The scented sunflower")
+				say("")
+				say("You've found all flowers")
+				say("")
+				say("Let's bring them to the old lady!")
+				say("")
+				set_state(makebouquet)
+			end
+		end
+	end
+	
+	state makebouquet begin
+		when letter begin
+			send_letter("You collected all flowers")
+			local x=find_npc_by_vnum(9006)
+			if 0==x then
+			else
+				target.vid("__TARGET2__", x, "Old Lady")
+			end
+		end
+		
+		when button or info begin
+			say_title("His daughter's wedding")
+			say("")
+			say("You collected all flowers the old lady needs to")
+			say("create her best flower bouquet.")
+			say("")
+			say("Bring these flowers to her!")
+			say("")
+		end
+		
+		when __TARGET2__.target.click or 9006.chat."His daughter's wedding" begin
+			target.delete("__TARGET2__")
+			if pc.count_item(30169) >= 1 and pc.count_item(30170) >= 1 and pc.count_item(30171) >= 1 then
+				say_title("Old Lady:")
+				say("")
+				say("Brilliant job! Hold on just a second...")
+				setdelay(300)
+				say("")
+				resetdelay()
+				say("Done! Here! Bring it to Octavio!")
+				say("")
+				say("His daughter should get that flower bouquet at")
+				say("its freshest state.")
+				say("")
+				if pc.get_sex() == 0 then
+					gender = "man"
+				else
+					gender = "woman"
+				end
+				say("You're a grown up "..gender.." now. Who knows, maybe the")
+				say("next one is for your wedding! Haha")
+				say("")
+				wait()
+				say_title("Information:")
+				say("")
+				----"123456789012345678901234567890123456789012345678901234567890"|
+				say("After you become level 25, you can get married to a partner")
+				say("of the opposite sex. Getting married allows you to teleport")
+				say("to your partner at any time.")
+				say("")
+				say("Also, when you fill up your Love Points, you can use special")
+				say("Couple Items which increase both partners' abilities.")
+				say("")
+
+				pc.remove_item(30169, 1)
+				pc.remove_item(30170, 1)
+				pc.remove_item(30171, 1)
+				pc.give_item2(30172, 1)
+				set_state(reportsuccess)
+			else
+				say_title(mob_name(20008))
+				say("")
+				say("I can't make a bouquet if you don't bring me a Rose,")
+				say("Primrose and Sunflower.")
+				say("")
+			end
+		end
+	end
+	
+	state reportsuccess begin
+		when letter begin
+			send_letter("Kızının Düğünü")
+			local y=find_npc_by_vnum(20008)
+			if 0==y then
+			else
+				target.vid("__TARGET3__", y, "Octavio")
+			end
+		end
+		
+		when button or info begin
+			say_title("Kızının Düğünü")
+			say("")
+			----"123456789012345678901234567890123456789012345678901234567890"|
+			say("Sonunda çiçek buketini bitirebildin.")
+			say("")
+			say_item_vnum(30172)
+			say("")
+			say("Hemen buketi "..areaname[pc.get_empire()][1].." köyüne götür")
+			say("ve onu Octavio'ya teslim et.")
+			say("")
+		end
+		
+		when __TARGET3__.target.click or 20008.chat."Kızının Düğünü" begin
+			target.delete("__TARGET3__")
+			if pc.count_item(30172) >= 1 then
+				say_title("Octavio:")
+				say("")
+				say("Gözlerime inanamıyorum!")
+				say("")
+				say("Bu çiçek buketi bir harika!")
+				say("")
+				say("Çok teşekkürler! Bunları hak ettin.")
+				say("")
+				say_reward("40.000 Tecrübe Puanı.")
+				say_reward("30.000 Yang.")
+				say_reward("Nesne: Duygu Maskesi (7 Günlük)")
+				say("")
+				s = select("Oh, bir şey değil.","Duygu Maskesi nedir?")
+				if s == 2 then
+					say_title("Bilgi:")
+					say("")
+					----"123456789012345678901234567890123456789012345678901234567890"|
+					say("Duygu Maskesini taktığın zaman diğer")
+					say("insanlara duygularını gösterebilirsin.")
+					say("")
+					say("Eğer karşılıklı bir duygunu göstermek")
+					say("istiyorsan ilk önce partnerinden izin almalısın.")
+					say("")
+					say_reward("Mevcut duyguları görmek için B tuşuna bas.")
+					say("")
+				end
+				pc.remove_item(30172, 1)
+				pc.give_exp2(40000)
+				pc.give_item2(71033)
+				pc.change_money(30000)
+				clear_letter()
+				set_state(complete)
+			end
+		end
+	end
+	state complete begin
+	end
+	state failure begin
+	end
+end

@@ -1,0 +1,261 @@
+quest change_empire begin
+	state start begin
+		when 20090.chat."Return to Asmodia"  with game.get_event_flag("c_e") >0  begin
+
+			local count = pc.get_change_empire_count() ;
+			if count >= 1 then
+				say("Someone who already have changed kingdom,")
+				say("Can not change anymore.")
+				say("")
+				return
+			end
+
+			if pc.get_empire()== 2 then
+				say("")
+				say("Sorry, migration to other kingdom is not permitted")
+				say("")
+				return 
+			end
+			----"123456789012345678901234567890123456789012345678901234567890"|
+			say_title("Return to Asmodia")
+			say("")
+			say("Asmodia Kingdom has just ended a severe cholera outbreak.")
+			say("The Town Leader is asking for their remnants to quickly")
+			say("return back to Asmodia and defent invasion against the")
+			say("mighty Pandemonians and Elgorians.")
+			say("")
+			say("In return for your help you will receive an Emotion Mask.")
+			say("Do you want to change kingdom?")
+			say("")
+
+			local s = select("Change Kingdom", "Don't change Kingdom")
+
+			if s == 1 then
+				change_empire.move_pc()
+			end
+		end
+
+		when 71054.use begin
+			say_title("Scroll of Betrayal")
+			say("")			
+			if get_time() < pc.getqf("next_use_time") then
+				say("You can't change your kingdom yet.")
+				say("")
+
+				if pc.is_gm() then
+					say("GM can reset time for testing.")
+					say("")
+					local s = select("Reset", "Don't reset")
+					if s == 1 then
+						say("Time has been reset")
+						say("")
+						pc.setqf("next_use_time", 0)
+					end
+				end
+				
+				return
+			end
+			
+			if change_empire.move_pc2() == true then
+				pc.setqf("next_use_time", get_time() + 86400 * 7)
+			end
+		end
+
+
+
+		function move_pc()
+			if pc.is_engaged() then
+				say("You're married.")
+				say("You cannot change your kingdom.")
+				say("")
+				return false
+			end
+
+			if pc.is_married() then
+				say("You're married")
+				say("You cannot change your kingdom.")
+				say("")
+				return false
+			end
+
+			if pc.is_polymorphed() then
+				say("You are transformed!")
+				say("You cannot change your kingdom")
+				say("")
+				return false
+			end
+
+			if pc.has_guild() then
+				say("You have a guild!")
+				say("You cannot change your kingdom")
+				say("")
+				return false
+			end
+
+			if pc.money < 500000 then
+				say("You don't have enough Yang")
+				say("You need 500.000 Yang to change your kingdom")
+				say("")
+				return false
+			end
+			
+			say("")
+			say("Please choose your new kingdom.")
+			say("")
+
+			local s = select("Asmodia Kingdom", "Cancel")
+
+			if 2 == s then
+				return false
+			else
+				s = 2
+			end
+			say_title("Scroll of Betrayal")
+			say("")
+			say_reward("Are you sure you want to change your kingdom?")
+			say_reward("You cannot change again once it's changed.")
+			say("")
+			
+			local a = select("Change Kingdom", "Do not change Kingdom")
+			
+			if 2 == a then
+				return false
+			end
+
+			local ret = pc.change_empire(s)
+			local oldempire = pc.get_empire()
+
+			if ret == 999 then
+				say("You have successfully changed your kingdom.")
+				say("You need to log in again.")
+				say("")
+				pc.change_gold(-500000)
+				pc.give_item2(71011) ;
+
+				char_log(0, "CHANGE_EMPIRE",string.format("%d -> %d", oldempire, s)) 
+
+				return true
+			else
+				if ret == 1 then
+					say_title("System:")
+					say("")
+					say("The Kingdom you have chosen is the same you are")
+					say("currently registered to..")
+					say("Please choose a different kingdom")
+					say("")
+				elseif ret == 2 then
+					say_title("System:")
+					say("")
+					say("Some of your characters have guilds.")
+					say("Characters who joined a guild are not permitted")
+					say("to seek exile.")
+					say("")
+				elseif ret == 3 then
+					say_title("System:")
+					say("")
+					say("Some of your characters are married.")
+					say("Married characters cannot change their kingdom!")
+					say("")
+				end
+			end
+
+			return false
+		end
+		
+		function move_pc2()
+			if pc.is_engaged() then
+				say("You're married.")
+				say("You cannot change your kingdom.")
+				say("")
+				return false
+			end
+
+			if pc.is_married() then
+				say("You're married")
+				say("You cannot change your kingdom.")
+				say("")
+				return false
+			end
+
+			if pc.is_polymorphed() then
+				say("You are transformed!")
+				say("You cannot change your kingdom")
+				say("")
+				return false
+			end
+
+			if pc.has_guild() then
+				say("You have a guild!")
+				say("You cannot change your kingdom")
+				say("")
+				return false
+			end
+
+			if pc.money < 500000 then
+				say("You don't have enough Yang")
+				say("You need 500.000 Yang to change your kingdom")
+				say("")
+				return false
+			end
+			
+			say_reward("Select your destination:")
+			say("")
+
+			local s = select("Pandemonia Kingdom", "Asmodia Kindom", "Elgoria Kingdom", "Cancel")
+
+			if 4 == s then
+				return false
+			end
+			
+			say_title("Scroll of Betrayal")
+			say("")	
+			say_reward("Are you sure you want to change your kingdom?")
+			say_reward("You cannot change again once it's changed.")
+			say("")
+			
+			local a = select("Change Kingdom", "Do not change Kingdom")
+			
+			if 2 == a then
+				return false
+			end
+
+			local ret = pc.change_empire(s)
+			local oldempire = pc.get_empire()
+
+			if ret == 999 then
+				
+				say("You have successfully changed your Kingdom.")
+				say("You need to log in again.")
+				say("")
+				pc.change_gold(-500000)
+				pc.remove_item(71054) ;
+
+				char_log(0, "CHANGE_EMPIRE",string.format("%d -> %d", oldempire, s)) 
+
+				return true
+			else
+				if ret == 1 then
+					say("The Kingdom you have chosen is the same you are")
+					say("currently registered to.")
+					say("")
+					say("Please choose a different kingdom")
+					say("")
+				elseif ret == 2 then
+					say("Some of your characters have guilds.")
+					say("")
+					say("Characters who belong to a guild are not permitted")
+					say("to seek exile.")
+					say("")
+				elseif ret == 3 then
+					say("Some of your characters are married.")
+					say("Married characters cannot change their kingdom!")
+					say("")
+				end
+			end
+
+			return false
+		end
+
+
+	end
+end

@@ -1,0 +1,205 @@
+quest main_quest_lv7 begin
+        state start begin
+        end
+        state run begin
+                when login or levelup or enter with pc.get_level() >= 7 begin
+                        set_state( gotosmith )
+                end
+        end
+        state gotosmith begin
+                when letter begin
+                        local v=find_npc_by_vnum(20016)
+                        if 0==v then
+                        else
+                                target.vid("__TARGET__", v, "Another favour")
+                        end
+                end
+                when letter begin
+                        send_letter("Another favour")
+                end
+                when button or info begin
+                        say_title("Another favour")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Please go to the Blacksmith, he needs someone to make a")
+                        say("delivery for him.")
+                        say("")
+                end
+                when __TARGET__.target.click begin
+                        target.delete("__TARGET__")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say_title("Blacksmith:")
+                        say("")
+                        say("Hey, adventurer! Could you do me another favour?")
+                        say("")
+                        say("Normally I don't ask other people to do things for me, but")
+                        say("you seem to be trustworthy. Call it an honor!")
+                        say("")
+                        wait()
+
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say_title("Blacksmith:")
+                        say("")
+                        say("I made a fishing rod for the Fisherman, unfortunately I am")
+                        say("very busy. I don't have time to bring it to the Fisherman")
+                        say("myself. Can you do it for me?")
+                        say_item("A very fexible fishing rod", 27490, "")
+                        say("")
+                        wait()
+                          say_title("Blacksmith:")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say_title("Blacksmith:")
+                        say("")
+                        say("The Fisherman should be somewhere by the river.")
+                        say("")
+                        say("If you deliver the fishing rod to the Fisherman, I will")
+                        say("improve one piece of your equipment for free.")
+                        say("")
+                        say("That's a fair deal, don't you think so?")
+                        say("")
+                        set_state( gotofisher )
+                        q.done()
+                end
+        end
+
+
+        state gotofisher begin
+                when letter begin
+                        send_letter("Find the Fisherman")
+                end
+                when button or info begin
+                        say_title("Find the Fisherman")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("The Blacksmith made a fishing rod for the Fisherman.")
+                        say("")
+                        say("Find the Fisherman near the river and give him his new rod.")
+                        say_item("A very fexible fishing rod", 27490, "")
+                        say("")
+                end
+                when 20016.chat."Deliver the fishing rod." begin
+                        say_title("Blacksmith:")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("")
+                        say("What, you have not made the delivery to the Fisherman yet?")
+                        say("")
+                        say("Then hurry up!")
+			say("You will find the fisherman by the river.")
+                        say("")
+                end
+                when 9009.chat."Deliver the fishing rod" begin
+                        say_title("Fisherman:")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Fishing is one of my greatest joys in life!")
+                        say("")
+                        say("Finally the Blacksmith has finished my new fishing rod.")
+                        say("")
+                        say("Do you know anything about fishing?")
+                        say("")
+                        wait()
+                        say_title("Fisherman:")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("First take the fishing rod in your hand; then, place a bait")
+                        say("on the hook. Next, cast the line of the fishing rod by")
+                        say("using your fishing skill. If you feel that a fish has bitten")
+                        say("(Thought bubble), then use your skill again. Either it")
+                        say("worked or you have to try again.")
+                        say("")
+                        say("There are many different fishes that you can catch, from")
+                        say("Minnows to Loaches and Gold Carps.")
+                        say("")
+                        say("Fish is good for your health and some of them can boost")
+                        say("your energy. So try it when you have time.")
+                        say("")
+                        wait()
+
+                        say_title("Fisherman:")
+                        say("")
+                        say("Once you become level 30, you will be allowed to fish.")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Oh yes, here is the payment for the fishing rod. Please")
+                        say("give it to the Blacksmith.")
+                        say_item("Fishing rod payment", 30001, "")
+                        say("")
+                        set_state( gotosmith2 )
+                end
+        end
+        state gotosmith2 begin
+                when letter begin
+                        local v=find_npc_by_vnum(20016)
+                        if 0==v then
+                        else
+                                target.vid("__TARGET__", v, "Return to Blacksmith.")
+                        end
+                end
+                when letter begin
+                        send_letter("Return to Blacksmith.")
+                end
+                when button or info begin
+                        say_title("Return to Blacksmith.")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("You delivered the fishing rod to the fisherman.")
+                        say("")
+                        say("Return to the Blacksmith with the letter and you will")
+                        say("then get your reward.")
+                        say_item("Fishing rod payment", 30001, "")
+                        say("")
+                end
+                when __TARGET__.target.click begin
+                        target.delete("__TARGET__")
+
+                        pc.setqf("refine_chance",1)
+                        say_title("Blacksmith:")
+                        say("")
+                        ----"123456789012345678901234567890123456789012345678901234567890"|
+                        say("Ah! You found the Fisherman?")
+                        say("")
+                        say("Great, you have saved me valuable time by making")
+                        say("that delivery.")
+                        say("")
+                        say("Here is a credit for a free upgrade. Use it wisely!")
+                        say("")
+                        set_state(refine)
+                        set_quest_state("main_quest_lv9", "run")
+                end
+        end
+        state refine begin
+                when login with pc.getf("main_quest_lv7","refine_chance") == 0 begin
+                        clear_letter()
+                        set_state( __COMPLETE__ )
+                end
+                when letter begin
+                        send_letter("Upgrade credit")
+                end
+                when button or info begin
+                        if pc.getqf("refine_chance") > 0 then
+                                say_title("Information:")
+                                say("")
+                                ----"123456789012345678901234567890123456789012345678901234567890"|
+                                say("With this credit the Blacksmith will upgrade one of your")
+                                say("weapons for free. Drag the weapon you wish to upgrade into")
+                                say("the Blacksmith to use it.")
+                                say("")
+                                ----"123456789012345678901234567890123456789012345678901234567890"|
+                                say("1) The credit will not be shown in the equipment")
+                                say("2) The upgrade is not 100% guaranteed.")
+                                say("3) Limited to items up to level 20.")
+                                say("")
+                        else
+                                say_title("Credit has already been used.")
+                                say("")
+                                say_reward("You have already used the credit.")
+                                say("")
+                                clear_letter()
+                                set_state(__COMPLETE__)
+                        end
+                end
+        end
+        state __COMPLETE__ begin
+        end
+end

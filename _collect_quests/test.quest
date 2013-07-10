@@ -1,0 +1,6 @@
+quest test begin
+	when letter begin
+		q.set_icon("scroll_open_golden.tga")
+		send_letter("Golden")
+	end
+end
