@@ -16,47 +16,47 @@ quest collect_quest_lv30  begin
 				target.vid("__TARGET__", v, "Biyolog Chaegirab")
 			end
 			q.set_icon("scroll_open_green.tga")
-			send_letter("&Chaegirab'ın Araştırması ")
+			send_letter("&Chaegirab'Ä±n AraÅŸtÄ±rmasÄ± ")
 		end
 					
 		when button or info begin
-			say_title_mob()
+			say_title("Chaegirab'Ä±n AraÅŸtÄ±rmasÄ± ")
 			say("")
-			say("Uriel'in öğrencisi Biyolog Chaegirab yardımına ihtiyacı var.")
+			say("Uriel'in Ã¶ÄŸrencisi Biyolog Chaegirab yardÄ±mÄ±na ihtiyacÄ± var.")
 			say("")
 			say("Acele et ve ona git.")
 			say("")
 		end
 		
-		when __TARGET__.target.click or 20084.chat."Yardımına ihtiyacım var." begin
+		when __TARGET__.target.click or 20084.chat."YardÄ±mÄ±na ihtiyacÄ±m var." begin
 			target.delete("__TARGET__")
 			say_title_mob()
 			say("")
-			say("Oh!!! Lütfen bana yardım et...")
+			say("Oh!!! LÃ¼tfen bana yardÄ±m et...")
 			say("")
-			say("Krallığımızdaki canavarlar hakkında araştırma yapıyorum.")
-			say("Ama bunu sadece kendim yapamam! Ben sadece bir bilim adamıyım anlayabiliyor musun?")
-			say("... ve bir bilim adamı olarak sorunlarımı anladığını umut ediyorum.")
+			say("KrallÄ±ÄŸÄ±mÄ±zdaki canavarlar hakkÄ±nda araÅŸtÄ±rma yapÄ±yorum.")
+			say("Ama bunu sadece kendim yapamam! Ben sadece bir bilim adamÄ±yÄ±m anlayabiliyor musun?")
+			say("... ve bir bilim adamÄ± olarak sorunlarÄ±mÄ± anladÄ±ÄŸÄ±nÄ± umut ediyorum.")
 			say("")
-			say("Lütfen bana yardım et. Kesinlikle ödülü vereceğim.")
-			say("")
-			wait()
-			say_title_mob()
-			say("")
-			say("Seungryong Vadisindeki orklar ile ilgili bir araştırma yürütüyorum.")
-			say("Orkların dişleri bir demir parçasını ezebilir.")
-			say("")
-			say("Bu bu araştırmayı yapmamın sebebi.")
-			say("")
-			say("Teorim ork dişleri ile ilgili. Belki bunun sırrını çözebilirsek bir devrim yapabiliriz!")
+			say("LÃ¼tfen bana yardÄ±m et. Kesinlikle Ã¶dÃ¼lÃ¼ vereceÄŸim.")
 			say("")
 			wait()
 			say_title_mob()
 			say("")
-			say("Bana biraz ork dişi getirebilir misin?")
+			say("Seungryong Vadisindeki orklar ile ilgili bir araÅŸtÄ±rma yÃ¼rÃ¼tÃ¼yorum.")
+			say("OrklarÄ±n diÅŸleri bir demir parÃ§asÄ±nÄ± ezebilir.")
 			say("")
-			say("Dişleri bana sadece teker teker getir ki onları doğru düzgün inceleyebileyim.")
-			say("Bol şanslar!")
+			say("Bu bu araÅŸtÄ±rmayÄ± yapmamÄ±n sebebi.")
+			say("")
+			say("Teorim ork diÅŸleri ile ilgili. Belki bunun sÄ±rrÄ±nÄ± Ã§Ã¶zebilirsek bir devrim yapabiliriz!")
+			say("")
+			wait()
+			say_title_mob()
+			say("")
+			say("Bana biraz ork diÅŸi getirebilir misin?")
+			say("")
+			say("DiÅŸleri bana sadece teker teker getir ki onlarÄ± doÄŸru dÃ¼zgÃ¼n inceleyebileyim.")
+			say("Bol ÅŸanslar!")
 			say("")
 			set_state(go_to_disciple)
 			pc.setqf("duration",0)
@@ -67,33 +67,33 @@ quest collect_quest_lv30  begin
 
 	state go_to_disciple begin
 		when letter begin
-			send_letter("&Chaegirab'ın Araştırması ")
+			send_letter("&Chaegirab'Ä±n AraÅŸtÄ±rmasÄ± ")
 		end
 
 		when button or info begin
-			say_title("Seungryong Vadisindeki Ork Dişleri:")
+			say_title("Seungryong Vadisindeki Ork DiÅŸleri:")
 			say("")
-			say("Biyolog Chaegirab'ın araştırmasını sürdürebilmesi için Seungryong Vadisindeki ork dişlerine")
-			say("ihtiyacı var.")
+			say("Biyolog Chaegirab'Ä±n araÅŸtÄ±rmasÄ±nÄ± sÃ¼rdÃ¼rebilmesi iÃ§in Seungryong Vadisindeki ork diÅŸlerine")
+			say("ihtiyacÄ± var.")
 			say("")
-			say("Araştırabilmesi için ona dişleri teker teker ver.")
+			say("AraÅŸtÄ±rabilmesi iÃ§in ona diÅŸleri teker teker ver.")
 			say("")
 			say_item_vnum(30006)
-			say_reward("Şu ana kadar "..pc.getqf("collect_count").." adet ork dişi topladın.")
+			say_reward("Åu ana kadar "..pc.getqf("collect_count").." adet ork diÅŸi topladÄ±n.")
 			say("")
 		end
 					
         when 71035.use begin 
 			if get_time() < pc.getqf("duration") then
-				syschat("Görev iksirini şu an kullanamazsın.")
+				syschat("GÃ¶rev iksirini ÅŸu an kullanamazsÄ±n.")
 				return
 			end
 			if pc.getqf("drink_drug")==1 then
-				syschat("Görev iksirini zaten kullanmışsın.")
+				syschat("GÃ¶rev iksirini zaten kullanmÄ±ÅŸsÄ±n.")
 				return
 			end
 			if pc.count_item(30006)==0 then
-				syschat("Görev iksirini ork dişi bulduktan sonra kullanabilirsin.")
+				syschat("GÃ¶rev iksirini ork diÅŸi bulduktan sonra kullanabilirsin.")
 				return
 			end
 			item.remove()
@@ -105,11 +105,11 @@ quest collect_quest_lv30  begin
 				pc.setqf("monocles_used", 0)
 			end
 			if get_time() > pc.getqf("duration") then
-				syschat("Kırmızı Monokl kullanmana gerek yok. Yeni bir nesne verebilirsin.")
+				syschat("KÄ±rmÄ±zÄ± Monokl kullanmana gerek yok. Yeni bir nesne verebilirsin.")
 				return
 			end
 			if pc.getqf("monocles_used") > 2 then
-				syschat("Zaten bugün 3 adet Kırmızı Monokl kullandın.")
+				syschat("Zaten bugÃ¼n 3 adet KÄ±rmÄ±zÄ± Monokl kullandÄ±n.")
 				return
 			end
 			if pc.getqf("monocles_used") == 0 then
@@ -119,23 +119,23 @@ quest collect_quest_lv30  begin
 			pc.setqf("duration", get_time()-1)
 			local use = pc.getqf("monocles_used")+1
 			pc.setqf("monocles_used",use)
-			syschat("Kırmızı Monokl kullanıldı. Şimdi bir diğer Ork Dişini Chaegirab'a verebilirsin.")
+			syschat("KÄ±rmÄ±zÄ± Monokl kullanÄ±ldÄ±. Åimdi bir diÄŸer Ork DiÅŸini Chaegirab'a verebilirsin.")
 		end
 		
-		when 20084.chat."GM: Gecikmeyi Geç lv30" with pc.count_item(30006) >0 and pc.is_gm() and get_time() <= pc.getqf("duration") begin
+		when 20084.chat."GM: Gecikmeyi GeÃ§ lv30" with pc.count_item(30006) >0 and pc.is_gm() and get_time() <= pc.getqf("duration") begin
 			say_title_mob()
 			say("Sen GM'sin. Tamam.")
 			pc.setqf("duration", get_time()-1)
 			return
 		end
 		
-		when 20084.chat."Ork Dişleri" with pc.count_item(30006) >0 begin
+		when 20084.chat."Ork DiÅŸleri" with pc.count_item(30006) >0 begin
 			if get_time() > pc.getqf("duration") then
 				if  pc.count_item(30006) >0 then
 					say_title_mob()
 					say("")
-					say("Merhaba! Bana bir Ork Dişi mi getirdin?!")
-					say("İlk olarak kontrol etmem gerek...")
+					say("Merhaba! Bana bir Ork DiÅŸi mi getirdin?!")
+					say("Ä°lk olarak kontrol etmem gerek...")
 					say("Bana bir dakika ver.")
 					say("")
 					pc.remove_item("30006",1)
@@ -154,21 +154,21 @@ quest collect_quest_lv30  begin
 							pc.setqf("collect_count",index)
 							say_title_mob()
 							say("")
-							say("Oh!!! İşte bu...")
-							say("Lütfen bana "..10-pc.getqf("collect_count").. " tane daha ork dişi getir.")
-							say("Araştırma için bana bu dişlerden daha fazlası gerek.")
-							say("Bol şanslar!")
+							say("Oh!!! Ä°ÅŸte bu...")
+							say("LÃ¼tfen bana "..10-pc.getqf("collect_count").. " tane daha ork diÅŸi getir.")
+							say("AraÅŸtÄ±rma iÃ§in bana bu diÅŸlerden daha fazlasÄ± gerek.")
+							say("Bol ÅŸanslar!")
 							say("")
 							pc.setqf("drink_drug",0)
 							return
 						end
 						say_title_mob()
 						say("")
-						say("Bütün Ork Dişlerini topladın!")
+						say("BÃ¼tÃ¼n Ork DiÅŸlerini topladÄ±n!")
 						say("")
-						say("Şimdi bana araştırmamı tamamen bitirebilmem için Jinunggynin Ruh Taşı gerek.")
+						say("Åimdi bana araÅŸtÄ±rmamÄ± tamamen bitirebilmem iÃ§in Jinunggynin Ruh TaÅŸÄ± gerek.")
 						say("")
-						say("Bu taşı orklardan elde edebilirsin.")
+						say("Bu taÅŸÄ± orklardan elde edebilirsin.")
 						say("")
 						pc.setqf("collect_count",0)
 						pc.setqf("drink_drug",0)
@@ -178,9 +178,9 @@ quest collect_quest_lv30  begin
 					else
 						say_title_mob()
 						say("")
-						say("Hmm... Bu kırık gözüküyor.")
-						say("Üzgünüm. Bunu kullanamam.")
-						say("Lütfen bana bir diğerini getirebilir misin?")
+						say("Hmm... Bu kÄ±rÄ±k gÃ¶zÃ¼kÃ¼yor.")
+						say("ÃœzgÃ¼nÃ¼m. Bunu kullanamam.")
+						say("LÃ¼tfen bana bir diÄŸerini getirebilir misin?")
 						say("")
 						pc.setqf("drink_drug",0)
 						return
@@ -194,15 +194,15 @@ quest collect_quest_lv30  begin
 			else
 				say_title_mob()
 				say("")
-				say("Çok üzgünüm....")
-				say("Bana verdiğin ork dişinin analizini henüz bitiremedim!")
+				say("Ã‡ok Ã¼zgÃ¼nÃ¼m....")
+				say("Bana verdiÄŸin ork diÅŸinin analizini henÃ¼z bitiremedim!")
 				local hoursleft = (pc.getqf("duration")-get_time())/60/60
 				if hoursleft > 12 then
-					say("Lütfen bu dişi bana yarın getirebilir misin?")
+					say("LÃ¼tfen bu diÅŸi bana yarÄ±n getirebilir misin?")
 				elseif hoursleft < 1 then
-					say("Lütfen bu dişi bana bir kaç dakika sonra getirebilir misin?")
+					say("LÃ¼tfen bu diÅŸi bana bir kaÃ§ dakika sonra getirebilir misin?")
 				else
-					say("Lütfen bu dişi bana bir kaç saat sonra getirebilir misin?")
+					say("LÃ¼tfen bu diÅŸi bana bir kaÃ§ saat sonra getirebilir misin?")
 				end
 				return
 			end
@@ -211,7 +211,7 @@ quest collect_quest_lv30  begin
 			
 	state key_item begin
 		when letter begin
-			send_letter("&Chaegirab'ın Araştırması ")
+			send_letter("&Chaegirab'Ä±n AraÅŸtÄ±rmasÄ± ")
 			if pc.count_item(30220)>0 then
 				local v = find_npc_by_vnum(20084)
 				if v != 0 then
@@ -222,22 +222,22 @@ quest collect_quest_lv30  begin
 		
 		when button or info begin
 			if pc.count_item(30220) >0 then
-				say_title("Ruh Taşı:")
+				say_title("Ruh TaÅŸÄ±:")
 				say("")
-				say_reward("Sonunda Jinunggynin Ruh Taşını buldun!")
-				say_reward("Onu Biyolog'a götür.")
+				say_reward("Sonunda Jinunggynin Ruh TaÅŸÄ±nÄ± buldun!")
+				say_reward("Onu Biyolog'a gÃ¶tÃ¼r.")
 				say_reward("Seni bekliyor.")
 				say("")
 				return
 			end
-			say_title("Özel Taş:")
+			say_title("Ã–zel TaÅŸ:")
 			say("")
-			say("10 Adet ork dişini topladın..")
-			say("Biyolog Chaegirab'ın araştırmasını tamamen bitirmek için Jinunggynin Ruh Taşına ihtiyacı var.")
+			say("10 Adet ork diÅŸini topladÄ±n..")
+			say("Biyolog Chaegirab'Ä±n araÅŸtÄ±rmasÄ±nÄ± tamamen bitirmek iÃ§in Jinunggynin Ruh TaÅŸÄ±na ihtiyacÄ± var.")
 			say("")
 			say_item_vnum(30220)
-			say("Taşı bulduğunda Biyolog Chaegirab'a götür.")
-			say("Bu taşı şu orklardan bulabilirsin: "..mob_name(635)..", "..mob_name(636).." ve "..mob_name(637)..".")
+			say("TaÅŸÄ± bulduÄŸunda Biyolog Chaegirab'a gÃ¶tÃ¼r.")
+			say("Bu taÅŸÄ± ÅŸu orklardan bulabilirsin: "..mob_name(635)..", "..mob_name(636).." ve "..mob_name(637)..".")
 			say("")
 		end
 					
@@ -245,21 +245,21 @@ quest collect_quest_lv30  begin
 			local s = number(1, 100)
 			if s == 1 and pc.count_item(30220)==0 then
 				pc.give_item2(30220, 1)
-				send_letter("&Jinunggynin Ruh Taşını buldun!")
+				send_letter("&Jinunggynin Ruh TaÅŸÄ±nÄ± buldun!")
 			end
 		end
 					
-		when __TARGET__.target.click or 20084.chat."Jinunggynin Ruh Taşını buldum." with pc.count_item(30220) > 0  begin
+		when __TARGET__.target.click or 20084.chat."Jinunggynin Ruh TaÅŸÄ±nÄ± buldum." with pc.count_item(30220) > 0  begin
 			target.delete("__TARGET__")
 			if pc.count_item(30220) > 0 then 
 				say_title_mob()
 				say("")
-				say("Ohh!!! Çok teşekkür ederim.")
-				say("Ödül olarak seni güçlendireceğim.")
-				say("Bu özel reçete çok özel bitkilerden yapıldı. Sana daha fazla güç verecek.")
-				say("Bunu Baek-Go'ya götür. Senin için bu reçeteden iksir yapacak.")
-				say("İyi Eğlenceler.")
-				say("Senin yardımınla orklar hakkında çok şey öğrendim!")
+				say("Ohh!!! Ã‡ok teÅŸekkÃ¼r ederim.")
+				say("Ã–dÃ¼l olarak seni gÃ¼Ã§lendireceÄŸim.")
+				say("Bu Ã¶zel reÃ§ete Ã§ok Ã¶zel bitkilerden yapÄ±ldÄ±. Sana daha fazla gÃ¼Ã§ verecek.")
+				say("Bunu Baek-Go'ya gÃ¶tÃ¼r. Senin iÃ§in bu reÃ§eteden iksir yapacak.")
+				say("Ä°yi EÄŸlenceler.")
+				say("Senin yardÄ±mÄ±nla orklar hakkÄ±nda Ã§ok ÅŸey Ã¶ÄŸrendim!")
 				say("")
 				pc.remove_item(30220,1)
 				set_state(__reward)
@@ -274,7 +274,7 @@ quest collect_quest_lv30  begin
 			
 	state __reward begin
 		when letter begin
-			send_letter("&Gizli Reçete")
+			send_letter("&Gizli ReÃ§ete")
 			local v = find_npc_by_vnum(20018)
 			if v != 0 then
 				target.vid("__TARGET__", v, "Baek-Go")
@@ -282,25 +282,25 @@ quest collect_quest_lv30  begin
 		end
 	
 		when button or info begin
-			say_title("Biyolog Chaegirab'ın Ödülü:")
+			say_title("Biyolog Chaegirab'Ä±n Ã–dÃ¼lÃ¼:")
 			say("")
-			say("Ork Dişi ve Jinunggynin Ruh Taşına ödül olarak Biyolog Chaegirab sana özel bir reçete verdi.")
-			say("Bu reçeteyi sana özel iksiri yapması için Baek-Go'ya götür.")
+			say("Ork DiÅŸi ve Jinunggynin Ruh TaÅŸÄ±na Ã¶dÃ¼l olarak Biyolog Chaegirab sana Ã¶zel bir reÃ§ete verdi.")
+			say("Bu reÃ§eteyi sana Ã¶zel iksiri yapmasÄ± iÃ§in Baek-Go'ya gÃ¶tÃ¼r.")
 			say("")
 		end
 		
-		when __TARGET__.target.click or 20018.chat."Gizli Reçete"  begin
+		when __TARGET__.target.click or 20018.chat."Gizli ReÃ§ete"  begin
 			target.delete("__TARGET__")
 			say_title_mob()
 			say("")
-			say("Bir bakalım..")
-			say("Yani bu reçete Biyolog Chaegirab'ın sana verdiği reçete mi?")
-			say("Hmm, arttırılmış hareket hızı. Fena değil ha?")
-			say("Oh! al bakalım, Kırmızı Abanoz sandık.")
+			say("Bir bakalÄ±m..")
+			say("Yani bu reÃ§ete Biyolog Chaegirab'Ä±n sana verdiÄŸi reÃ§ete mi?")
+			say("Hmm, arttÄ±rÄ±lmÄ±ÅŸ hareket hÄ±zÄ±. Fena deÄŸil ha?")
+			say("Oh! al bakalÄ±m, KÄ±rmÄ±zÄ± Abanoz sandÄ±k.")
 			say("")
-			say_reward("Biyolog Chaegirab'ın görevini tamamladığın için +10 hareket hızı kazandın.")
+			say_reward("Biyolog Chaegirab'Ä±n gÃ¶revini tamamladÄ±ÄŸÄ±n iÃ§in +10 hareket hÄ±zÄ± kazandÄ±n.")
 			say("")
-			say_reward("Bu etki geçici değil, kalıcı.")
+			say_reward("Bu etki geÃ§ici deÄŸil, kalÄ±cÄ±.")
 			affect.add_collect(apply.MOV_SPEED, 10, 60*60*24*365*60) -- 60 Years
 			pc.give_item2(50109)
 			clear_letter()
