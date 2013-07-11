@@ -14,90 +14,84 @@ quest collect_quest_lv40  begin
                 when letter begin
                         local v = find_npc_by_vnum(20084)
                         if v != 0 then
-                                target.vid("__TARGET__", v, "Biologist Chaegirab")
+                                target.vid("__TARGET__", v, "Biyolog Chaegirab")
                         end
-						q.set_icon("scroll_open_green.tga")
-                        send_letter("&Innııın İsteği")
+			q.set_icon("scroll_open_green.tga")
+                        send_letter("&Chaegirab'ın Araştırması ")
                 end
-                when button or info begin
-                        say_title("Biologist Chaegirab")
-                        say("")
-                        say("Biologist Chaegirab, the apprentice of Uriel,")
-                        say("looks for your help urgently.")
-                        say("Hurry up and help him.")
-                        say("")
+
+		when button or info begin
+			say_title("Chaegirab'ın Araştırması ")
+			say("")
+			say("Uriel'in öğrencisi Biyolog Chaegirab yardımına ihtiyacı var.")
+			say("")
+			say("Acele et ve ona git.")
+			say("")
+		end  say("")
                 end
-                when __TARGET__.target.click or
-                        20084.chat."Listen" begin
+
+                when __TARGET__.target.click or 20084.chat."Dinle" begin
                         target.delete("__TARGET__")
-                        say_title("Biologist Chaegirab:")
+                        say_title_mob()
                         say("")
-                        ---                                                   l
-                        say("Oh hello! I don't only collect information about")
-                        say("monsters, I'm also writing a book about the")
-                        say("different spells.")
-                        say("I cannot handle it alone..")
-                        say("Actually I should do the examination on my own,")
-                        say("but I cannot. Could you do this for me? Of course")
-                        say("you will receive a good reward for helping me.")
+                        say("Oh, merhaba! Ben sadece canavarlar hakkında bilgi toplamıyorum.")
+                        say("Ayrıca değişik dillerde kitapda yazıyorum. Artık dayanamıyorum. Gerçekten zorlaşmaya başladı.")
+                        say("")
+                        say("Bu işler beni artık zorluyor..")
+                        say("Aslında kendi işimi kendim yapmam gerek ama yapamıyorum. Benim için bu işi yapabilir misin?")
+                        say("Kesinlikle seni ödüllendireceğim.")
                         say("")
                         wait()
-                        say_title("Biologist Chaegirab:")
+                        say_title_mob()
                         say("")
-                        ---                                                   l
-			say("I would like to know more about the secret sect")
-			say("that exists in the Dragon Valley...")
+			say("Seungryong Vadisi hakkında daha çok bilgi edinmek istiyorum? Anlıyor musun.")
 			say("")
-			say("I think they know something about spells and")
-			say("magic of the old age, especially about their")
-			say("Curse Book. These books are surely the key that")
-			say("is missing me. Please bring me always one book")
-			say("at a time, so I can inspect it.")
+			say("Oradaki eski kitapların lanet büyüleri hakkında bazı şeyleri sakladığını düşünüyorum.")
+			say("Bu kitaplar kesinlikle benim kaçırdığım ve öğrenmek istediğim şeyler.")
+			say("Kitapları doğru düzgün inceleyebilmem için lütfen bana her seferinde birer tane kitap getir.")
 			say("")
                         wait()
-                        say_title("Biologist Chaegirab:")
+                        say_title_mob()
                         say("")
-                        say("But don't bring me any too old or damaged books.")
-                        say("I cannot use them for my examination.")
-                        say("For my research I need altogether 15 books.")
+                        say("Ama bana eski ve yıpranmış kitapları getirme.")
+                        say("Araştırmam için onları kullanamam.")
+                        say("Araştırmam için yaklaşık olarak 15 adet kitaba ihtiyacım olacak.")
                         say("")
-                        say("Only bring me one book at a time.")
+                        say("Unutma her seferinde bir tane kitap.")
                         say("")
                         set_state(go_to_disciple)
                         pc.setqf("duration",0) 
-                        pc.setqf("collect_count",0)                        pc.setqf("drink_drug",0) 
+                        pc.setqf("collect_count",0)
+                        pc.setqf("drink_drug",0) 
                 end
         end
         state go_to_disciple begin
                 when letter begin
-                        send_letter("&The examination of the Biologist")
+                        send_letter("&Chaegirab'ın Araştırması ")
                 end
                 when button or info begin
-                        say_title("The spells of the old age.")
-                        ---                                                   l
+                        say_title("Eski Çağlardan Büyüler:")
                         say("")
-                        say("Chaegirab, the apprentice of Uriel, is examining")
-			say("the spells of the old age in the Dragon Valley.")
+                        say("Uriel'in öğrencisi Biyolog Chaegirab Seungryong Vadisindeki eski büyüler hakkında bir araştırma yürütüyor.")
                         say("")
-                        say("Bring 15 Curse Book to Chaegirap, but only")
-                        say("one at a time.")
+                        say("Her seferinde birer adet olmak üzere Chaegirab'a 15 adet kitap getir.")
                         say("")
                         say_item_vnum(30047)
-                        say_reward("  Present".." "..pc.getqf("collect_count").."books collected")
+                        say_reward("Şu ana kadar ".." "..pc.getqf("collect_count").." adet kitap getirdin.")
                         say("")
                 end
 				
                 when 71035.use begin 
                     if get_time() < pc.getqf("duration") then
-						syschat("You can not use the Quest Potion yet.")
+						syschat("Görev iksirini şu an kullanamazsın.")
                         return
                     end
                     if pc.getqf("drink_drug")==1 then
-						syschat("You already used it.")
+						syschat("Görev iksirini zaten kullanmışsın.")
 						return
                     end
                     if pc.count_item(30047)==0 then
-                        syschat("You can use the Quest Potion once you got a Curse Book.")
+                        syschat("Görev iksirini ork dişi bulduktan sonra kullanabilirsin.")
 						return
                     end
                     item.remove()
@@ -109,11 +103,11 @@ quest collect_quest_lv40  begin
 				pc.setqf("monocles_used", 0)
 			end
 			if get_time() > pc.getqf("duration") then
-				syschat("You can already give the next item to Chaegirab. No Monocle needed.")
+				syschat("Kırmızı Monokl kullanmana gerek yok. Yeni bir nesne verebilirsin.")
 				return
 			end
 			if pc.getqf("monocles_used") > 2 then
-				syschat("You have already used 3 Red Monocles today.")
+				syschat("Zaten bugün 3 adet Kırmızı Monokl kullandın.")
 				return
 			end
 			if pc.getqf("monocles_used") == 0 then
@@ -123,30 +117,27 @@ quest collect_quest_lv40  begin
 			pc.setqf("duration", get_time()-1)
 			local use = pc.getqf("monocles_used")+1
 			pc.setqf("monocles_used",use)
-			syschat("You have used a Red Monocle. You can give the next Curse Book to Chaegirab.")
+			syschat("Kırmızı Monokl kullanıldı. Şimdi bir diğer Lanet Kitabını Chaegirab'a verebilirsin.")
 		end
 
 		when 20084.chat."GM: collect_quest_lv40.skip_delay" with pc.count_item(30047) >0 and pc.is_gm() and get_time() <= pc.getqf("duration") begin
-			say(mob_name(20084))
-			say("You are GM, OK")
+			say_title_mob()
+			say("Sen GM'sin. Tamam.")
 			pc.setqf("duration", get_time()-1)
 			return
 		end
             when 20084.chat."The Curse Book" with pc.count_item(30047) >0   begin
                         if get_time() > pc.getqf("duration") then
-							if  pc.count_item(30047) >0 then
-                                say_title("Biologist Chaegirab:")
+				if  pc.count_item(30047) >0 then
+                                say_title_mob()
                                 say("")
-                                ---                                                   l
-                                say("Oh!! You brought me a book...")
-                                say("I have to check it...")
-                                say("One moment please...")
+                                say("Oh!! Bana bir kitap getirmişsin...")
+                                say("Bunu kontrol etmem gerek...")
+                                say("Lütfen biraz bekle...")
                                 say("")
                                 pc.remove_item(30047, 1)
 				pc.setqf("duration",get_time()+60*60*8) -----------------------------------22�ð�
-
-				wait()
-				
+				wait()				
                                 local pass_percent
                                 if pc.getqf("drink_drug")==0 then
                                         pass_percent=70
@@ -158,18 +149,18 @@ quest collect_quest_lv40  begin
 					if pc.getqf("collect_count")< 14 then         
 						local index =pc.getqf("collect_count")+1
 						pc.setqf("collect_count",index)     
-						say_title("Chaegirab:")
+						say_title_mob()
 						say("")
-						say("Ohh!! Wonderful! Thank you...")
-						say("There are only "..15-pc.getqf("collect_count").. " books left!")
-						say("Good Luck!")
+						say("Ohh!! Mükemmel! Teşekkürler...")
+						say("Daha "..15-pc.getqf("collect_count").. " adet kitap kaldı.")
+						say("Bol şanslar!")
                                                 say("")
                                                 pc.setqf("drink_drug",0)         
                                                 return
                                         end
-                                        say_title("Biologist Chaegirab:")
+                                        say_title_mob()
                                         say("")
-					say("You have collected all 15 books!!")
+					say("15 Adet kitabı topladın!")
 					say("There is only the Esoteric Soul Stone of the")
 					say("temple left, it serves as a key to decipher")
 					say("the Curse Books.")
@@ -184,35 +175,33 @@ quest collect_quest_lv40  begin
                                         set_state(key_item)
                                         return
                                 else
-                                say_title("Biologist Chaegirab:")
+                                say_title_mob()
                                 say("")
-                                say("Hmm....this isn't good.")
-                                say("I am sorry. I cannot use this one.")
-                                say("Look here, the important parts are all ripped off.")
-                                say("Please find another one.")
+                                say("Hmm....bu iyi değil.")
+                                say("Üzgünüm. Bunu kullanamam.")
+                                say("Baksana önemli sayfaları yırtılmış..")
+                                say("Lütfen daha sonra bir diğerini getir.")
                                 say("")
                                 pc.setqf("drink_drug",0)         
                                 return
                         end
 				else
-                    say_title("Biologist Chaegirab:")
-					say("You don't have a"..item_name(30006).."!")
+                                        say_title_mob()
+					say("Sende "..item_name(30006).." yok!")
 					return
 				end
                 else
-                  say_title("Biologist Chaegirab:")
+                  say_title_mob()
 		  say("")
-		  ---                                                   l
-                  say("I am terribly sorry....")
-                  say("I still have not deciphered the last book.")
-                  say("I am very sorry... Can you give me another one")
+                  say("Üzgünüm....")
+                  say("Bana verdiğin kitabın analizini henüz bitiremedim.")
                 local hoursleft = (pc.getqf("duration")-get_time())*60*60
                 if hoursleft > 12 then
-                	say("tomorrow?")
+                	say("Bir diğer kitabı yarın getirebilir misin?")
                 elseif hoursleft < 1 then
-                	say("in a few minutes?")
+                	say("Bir diğer kitabı bir kaç dakika sonra getirebilir misin?")
                 else
-		  	say("a few hours later?")
+		  	say("Bir diğer kitabı bir kaç saat sonra getirebilir misin?")
 		  end
                   say("")
                   return
@@ -221,27 +210,24 @@ quest collect_quest_lv40  begin
 end
         state key_item begin
                 when letter begin
-                        send_letter("&The examination of the Biologist")
+                        send_letter("&Chaegirab'ın Araştırması ")
                         if pc.count_item(30221)>0 then
                                 local v = find_npc_by_vnum(20084)
                                 if v != 0 then
-                                        target.vid("__TARGET__", v, "Chaegirab")
+                                        target.vid("__TARGET__", v, "Biyolog Chaegirab")
                                 end
                         end
                 end
                 when button or info begin
                         if pc.count_item(30221) >0 then
-                                say_title("The Esoteric Soul Stone")
+                                say_title("Tapınağın Ruh Taşı:")
                                 say("")
-                                ---                                                   l
-                                say("Finally you have found the Esoteric Soul Stone,")
-                                say("give it to Chaegirab.")
+                                say("Sonunda Tapınağın Ruh Taşını buldun git ve onu Chaegirab'a ver.")
                                 say("")
                                 return
                         end
-                        say_title("The Esoteric Soul Stone")
+                        say_title("Tapınağın Ruh Taşı:")
                         say("")
-                        ---                                                   l
 			say("For Chaegirab's examination, you have collected")
 			say("15 Curse Book, and the last thing he needs is")
 			say("an Esoteric Soul Stone,")
