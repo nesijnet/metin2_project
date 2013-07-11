@@ -22,7 +22,7 @@ quest collect_quest_lv30  begin
 		when button or info begin
 			say_title("Chaegirab'ın Araştırması ")
 			say("")
-			say("Uriel'in öğrencisi Biyolog Chaegirab yardımına ihtiyacı var.")
+			say("Uriel'in öğrencisi Biyolog Chaegirab'ın yardıma ihtiyacı var.")
 			say("")
 			say("Acele et ve ona git.")
 			say("")
