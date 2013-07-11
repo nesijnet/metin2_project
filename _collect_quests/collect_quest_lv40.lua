@@ -17,7 +17,7 @@ quest collect_quest_lv40  begin
                                 target.vid("__TARGET__", v, "Biologist Chaegirab")
                         end
 						q.set_icon("scroll_open_green.tga")
-                        send_letter("&The Request of Chaegirab")
+                        send_letter("&InnÄ±Ä±Ä±n Ä°steÄŸi")
                 end
                 when button or info begin
                         say_title("Biologist Chaegirab")
@@ -143,7 +143,7 @@ quest collect_quest_lv40  begin
                                 say("One moment please...")
                                 say("")
                                 pc.remove_item(30047, 1)
-				pc.setqf("duration",get_time()+60*60*8) -----------------------------------22½Ã°£
+				pc.setqf("duration",get_time()+60*60*8) -----------------------------------22ï¿½Ã°ï¿½
 
 				wait()
 				
@@ -327,7 +327,7 @@ end
 			say_reward("As reward for Chaegirab's request, you received")
 			say_reward("+5% on your attack speed. This reward is not")
 			say_reward("temporary, but eternal.")
-			affect.add_collect(apply.ATT_SPEED,5,60*60*24*365*60) --60³â		
+			affect.add_collect(apply.ATT_SPEED,5,60*60*24*365*60) --60ï¿½ï¿½		
                         pc.give_item2(50110)
                         clear_letter()
                         set_quest_state("collect_quest_lv50", "run")
