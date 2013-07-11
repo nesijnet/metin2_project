@@ -28,7 +28,7 @@ quest collect_quest_lv30  begin
 			say("")
 		end
 		
-		when __TARGET__.target.click or 20084.chat."Yardımına ihtiyacım var." begin
+		when __TARGET__.target.click or 20084.chat."Yardımına İhtiyacım Var" begin
 			target.delete("__TARGET__")
 			say_title_mob()
 			say("")
