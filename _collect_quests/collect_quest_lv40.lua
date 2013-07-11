@@ -3,24 +3,24 @@
 --METIN2 Collecting Quest
 ----------------------------------------------------
 quest collect_quest_lv40  begin
-        state start begin
-        end
-        state run begin
-                when login or levelup with pc.level >= 40  begin
-                        set_state(information)
-                end
-        end
-        state information begin
-                when letter begin
-                        local v = find_npc_by_vnum(20084)
-                        if v != 0 then
-                                target.vid("__TARGET__", v, "Biyolog Chaegirab")
-                        end
-			q.set_icon("scroll_open_green.tga")
-                        send_letter("&Chaegirab'ın Araştırması ")
-                end
+	state start begin
+	end
+	state run begin
+		when login or levelup with pc.level >= 40  begin
+			set_state(information)
+		end
+	end
+	state information begin
+		when letter begin
+			local v = find_npc_by_vnum(20084)
+			if v != 0 then
+				target.vid("__TARGET__", v, "Biyolog Chaegirab")
+			end
+		q.set_icon("scroll_open_green.tga")
+		send_letter("&Chaegirab'ın Araştırması ")
+	end
 
-		when button or info begin
+	when button or info begin
 			say_title("Chaegirab'ın Araştırması ")
 			say("")
 			say("Uriel'in öğrencisi Biyolog Chaegirab yardımına ihtiyacı var.")
@@ -186,13 +186,14 @@ quest collect_quest_lv40  begin
                                 return
                         end
 				else
-                                        say_title_mob()
+					say_title_mob()
+					say("")
 					say("Sende "..item_name(30006).." yok!")
 					return
 				end
                 else
                   say_title_mob()
-		  say("")
+					say("")
                   say("Üzgünüm....")
                   say("Bana verdiğin kitabın analizini henüz bitiremedim.")
                 local hoursleft = (pc.getqf("duration")-get_time())*60*60
@@ -202,7 +203,7 @@ quest collect_quest_lv40  begin
                 	say("Bir diğer kitabı bir kaç dakika sonra getirebilir misin?")
                 else
 		  	say("Bir diğer kitabı bir kaç saat sonra getirebilir misin?")
-		  end
+					end
                   say("")
                   return
                 end
@@ -228,13 +229,12 @@ end
                         end
                         say_title("Tapınağın Ruh Taşı:")
                         say("")
-			say("For Chaegirab's examination, you have collected")
-			say("15 Curse Book, and the last thing he needs is")
-			say("an Esoteric Soul Stone,")
+			say("Chaegirab'ın araştırması için ona 15 take kitap getirdin.")
+			say("Biyolog Chaegirab'a son olarak Tapınağın Ruh Taşı gerekiyor.")
 			say("")
 			say_item_vnum(30221)
-			say("Give it to Chaegirab. You can obtain it from")
-			say("the Esoterics in Dragon Valley.")
+			say("Tapınağın Ruh Taşını bulduğun zaman Chaegirab'a teslim et.")
+			say("Ruh Taşını Seungryong Vadisindeki Tapınaktan bulabilirsin...")
 			say("")
                 end
 					when 701.kill or
@@ -247,31 +247,26 @@ end
                         local s = number(1, 300)
                         if s == 1 and pc.count_item(30221)==0 then
                                 pc.give_item2(30221, 1)
-                                send_letter("&You gained the Esoteric Soul Stone!")
+                                send_letter("&Tapınağın Ruh Taşını Buldun!")
                         end
                 end
-                when __TARGET__.target.click  or
-                        20084.chat."You have found the Esoteric Soul Stone" with pc.count_item(30221) > 0  begin
-                        target.delete("__TARGET__")
+			when __TARGET__.target.click  or 20084.chat."Tapınağın Ruh Taşını Buldum" with pc.count_item(30221) > 0  begin
+			target.delete("__TARGET__")
 			if pc.count_item(30221) > 0 then 
-			say_title("Biologist Chaegirab:")
+			say_title_mob()
 			say("")
-			say("Ohh!!! thank you very much..")
-			say("As reward I will raise your inner strength ..")
-			---                                                   l
-			say("That's a secret recipe, which contains the")
-			say("Information about strength...")
-			say("Give it to Baek-Go. He will produce Strength")
-			say("Potion. Have fun!")
-			say("Thank you, now I am familiar with the spells of")
-			say("the old age.")
-                        say("")
-                        pc.remove_item(30221,1)
-                        set_state(__reward)
+			say("Ohh!!! Çok teşekkürler..")
+			say("Sana ödül olarak iç gücünü yükseltebileceğin bir reçete yapacağım.")
+			say("Bu özel reçete iç gücünü hangi bitkilerle yükseltebileceğin hakkında")
+			say("özel bilgiler içeriyor. Bunu Baek-Go'ya ver. Senin için iksir yapacak.")
+			say("Bol Şanslar.")
+			say("")
+			pc.remove_item(30221,1)
+			set_state(__reward)
 			else
-				say_title("Biologist Chaegirab:")
+				say_title_mob()
 				say("")
-				say("You don't have a "..item_name(30221).."!")
+				say("Sende "..item_name(30221).." yok!")
 				say("")
 				return
 			end
@@ -279,41 +274,33 @@ end
         end
         state __reward begin
                 when letter begin
-                        send_letter("&The reward of Chaegirab")
+                        send_letter("&Chaegirab'ın Ödülü ")
                         local v = find_npc_by_vnum(20018)
                         if v != 0 then
                                 target.vid("__TARGET__", v, "Baek-Go")
                         end
                 end
                 when button or info begin
-                        say_title("The reward of Chaegirab")
-                        ---                                                   l
-			say("As reward for collecting the 15 Curse Books")
-			say("and the Esoteric Soul Stone from the spiders,")
-			say("Biologist Chaegirab gave you a recipe for a")
-			say("secret potion.")
-			say("")
-			say("Please give this to Baek-Go, he will create the")
-			say("potion.")
+                        say_title("Chaegirab'ın Ödülü:")
+						say("Tapınağın Ruh Taşını bulduğun için ve 15 adet Lanet Kitabı getirdiğin için;")
+						say("Chaegirab sana ödül olarak gizli bir reçete verdi.")
+						say("Bu reçeteyi Baek-Go'ya götür ve ondan iksir yapmasını iste.")
                         say("")
                 end
-                when __TARGET__.target.click  or
-                        20018.chat."The Secret Recipe"  begin
-                    target.delete("__TARGET__")
-                        say_title("Baek-Go:")
+                when __TARGET__.target.click  or 20018.chat."Gizli Reçete"  begin
+						target.delete("__TARGET__")
+                        say_title_mob()
                         say("")
-                        say("Let me have a look..")
-                        say("What is this recipe here for?")
-                        say("Hmm, Attack Speed +5%...")
-                        say("Oh! Here, have an Orange Ebony box.")
-                        say("You are really a good guy.")
-                        say("Here you are.")
+                        say("Bir bakalım..")
+                        say("Bu reçete ne için?")
+                        say("Hmm, Saldırı Hızı +5%...")
+                        say("Oh! Şunuda al; Kırmızı Abanoz Sandık.")
+                        say("Gerçekten iyisin.")
                         say("")
-			-----------                                                   l
-			say_reward("As reward for Chaegirab's request, you received")
-			say_reward("+5% on your attack speed. This reward is not")
-			say_reward("temporary, but eternal.")
-			affect.add_collect(apply.ATT_SPEED,5,60*60*24*365*60) --60��		
+                        say_reward("Biyolog Chaegirab'ın görevini tamamladığın için +%5 atak hızı kazandın.")
+                        say("")
+                        say_reward("Bu etki geçici değil, kalıcı.")
+						affect.add_collect(apply.ATT_SPEED,5,60*60*24*365*60) --60��		
                         pc.give_item2(50110)
                         clear_letter()
                         set_quest_state("collect_quest_lv50", "run")
