@@ -3,90 +3,76 @@
 -- The Situation of the Three Kingdoms
 ---------------------------------------
 quest main_quest_lv15 begin
-        state start begin
-        end
-        state run begin
-                when login or levelup or enter begin
-                        if pc.get_level() >= 15 then
-                                setstate(gotoboss)
-                        end
-                end
-        end
-        state gotoboss begin
-                when letter begin
-                        local v=find_npc_by_vnum(20355)
-                        if 0==v then
-                        else
-                                target.vid("__TARGET__", v, "Find the Captain.")
-                        end
-                end
-                when letter begin
-                        setskin(NOWINDOW)
-                        makequestbutton( "Find the Captain." )
-                        q.set_title("The current situation" )
-                        q.start()
-                end
-                when button or info begin
-                        say_title("The current situation")
-                        say("")
-                        ----"123456789012345678901234567890123456789012345678901234567890"|
-                        say("Report to the Captain, you will learn about the current")
-                        say("situation regarding the three kingdoms.")
-                        say("")
-                end
-                when __TARGET__.target.click begin
-                        target.delete("__TARGET__")
-                        say_title("Captain:")
-                        say("")
-                        ----"123456789012345678901234567890123456789012345678901234567890"|
-                        say("I think you are ready to learn more about the world.")
-                        say("")
-                        say("Let me begin with our kingdom, "..locale.empire_names[pc.get_empire()]..".")
-                        say("")
-                        say("To win a war you have to know yourself before you can truly")
-                        say("learn about your enemy!")
-                        say("")
-                        wait()
-                        local empire = pc.getempire()
-                        if empire == 1 then
-                                say_title("Captain:")
-                                say("")
-                                say("Our kingdom has always been a kingdom of trade. We always")
-                                say("had the most extensive trade routes, and that is why the")
-                                say("business was flourishing in our kingdom.")
-                                say("")
-                                say("Since the Metin Stones appeared, trade has decreased and")
-                                say("business is just getting worse. As a trade kingdom we never")
-                                say("had a huge army as we had no need for it.")
-                                say("")
-                                say("Because of our wealth we were able to hire lots of")
-                                say("mercenaries. Mercenaries are trustworthy and loyal...")
-                                say("as long they get paid.")
-                                say("")
-                                wait()
-                                say_title("Captain:")
-                                say("")
-                                ----"123456789012345678901234567890123456789012345678901234567890"|
-                                say("Thanks to the mercenaries, our country has regained its")
-                                say("stability. But to be prepared for the future wars, we need")
-                                say("more mercenaries and a strong economy.")
-                                say("")
-                                say("This will require a lot of hard work from us and that")
-                                say("includes you.")
-                                say("")
-                                wait()
-                                say_title("Captain:")
-                                say("")
-                                ----"123456789012345678901234567890123456789012345678901234567890"|
-                                say("I will give you a new assignment.")
-                                say("")
-                                say("Bring this speciality to Yu-Hwan in the neighbouring")
-                                say("village. Our kingdom is a kingdom of traders and we are")
-                                say("trading with different goods of the region. You will")
-                                say("greatly aid the village if you deliver this to Yu-Hwan.")
+	state start begin
+	end
+	state run begin
+		when login or levelup or enter begin
+			if pc.get_level() >= 15 then
+				setstate(gotoboss)
+			end
+		end
+	end
+	state gotoboss begin
+		when letter begin
+			send_letter("Yüzbaşıya Git")
+			local v=find_npc_by_vnum(20355)
+			if 0==v then
+			else
+				target.vid("__TARGET__", v, mob_name(20355))
+			end
+		end
+		when button or info begin
+			say_title("Mevcut Durum:")
+			say("")
+			say("Yüzbaşıya gitmelisin, sana üç imparatorluk hakkında söylecekleri var.")
+			say("")
+		end
+		when __TARGET__.target.click begin
+			target.delete("__TARGET__")
+			say_mob_name()
+			say("")
+			say("Bence dünya hakkında bazı şeyler öğrenmeye hazırsın.")
+			say("")
+			say("İlk olarak imparatorluğumuzla başlayalım, "..locale.empire_names[pc.get_empire()]..".")
+			say("")
+			say("Bir savaşı kazanmadan önce düşmanın hakkında çok bilgi toplamak gereklidir.")
+			say("")
+			wait()
+			local empire = pc.getempire()
+			if empire == 1 then
+				say_mob_name()
 				say("")
-
-                        elseif empire == 2 then
+				say("İmparatorluğumuzda her zaman ticaret vardı.")
+				say("Bizde her zaman en değerli ticaret yolları vardı, ve bu da ticaretimizin")
+				say("nasıl bu kadar ilerlediğinin bir sebebiydi.")
+				say("")
+				say("Metin taşları ortaya çıkmadan önce, ticaret azalmıştı ve işler kötüye gidiyordu.")
+				say("Bir ticaret imparatorluğu olarak hiç bir zaman dev bir ordu gerek görmedik.")
+				say("")
+				say("Çünkü gücümüz bir çok paralı asker almaya yetiyordu")
+				say("Paralı askerler güvenli ve sadıklar... paraları ödendiği sürece.")
+				say("")
+				wait()
+				say_mob_name()
+				say("")
+				say("Thanks to the mercenaries, our country has regained its")
+				say("stability. But to be prepared for the future wars, we need")
+				say("more mercenaries and a strong economy.")
+				say("")
+				say("This will require a lot of hard work from us and that")
+				say("includes you.")
+				say("")
+				wait()
+				say_mob_name()
+				say("")
+				say("Sana yeni bir görev vereceğim.")
+				say("")
+				say("Bring this speciality to Yu-Hwan in the neighbouring")
+				say("village. Our kingdom is a kingdom of traders and we are")
+				say("trading with different goods of the region. You will")
+				say("greatly aid the village if you deliver this to Yu-Hwan.")
+				say("")
+				elseif empire == 2 then
                                 say_title("Captain:")
                                 say("")
                                 say("Our kingdom is ruled by the Warlord Liu-Bang. Our nation")
