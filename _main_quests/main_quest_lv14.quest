@@ -58,6 +58,7 @@ quest main_quest_lv14 begin
 		when button or info begin
 			say_title("Savaş Metin Taşını İmha Et:")
 			say("")
+			say("Yüzbaşının isteği üzerine;")
 			say("Bir tane Savaş Metini imha etmelisin.")
 			say("")
 		end
