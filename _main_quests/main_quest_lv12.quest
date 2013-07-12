@@ -8,7 +8,7 @@ quest main_quest_lv12 begin
 	end
 	state gotoboss begin
 		when letter begin
-			send_letter("Yüzbaşıyı Bul")
+			send_letter("Yüzbaşıya Git")
 			local v=find_npc_by_vnum(20355)
 			if 0==v then
 			else
@@ -16,7 +16,7 @@ quest main_quest_lv12 begin
 			end
 		end
 		when button or info begin
-			say_title("Yüzbaşıyı Bul:")
+			say_title("Yüzbaşıya Git:")
 			say("")
 			say("Yüzbaşının senin için yeni bir görevi var.")
 			say("Git ve onunla konuş.")
