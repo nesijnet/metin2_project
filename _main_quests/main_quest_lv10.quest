@@ -161,12 +161,11 @@ quest main_quest_lv10 begin
 			say("could gather. Deliver it to the Captain.")
 			say("")
 			wait()
-			say_title("Musician Yu-Hwan:")
+			say_mob_name()
 			say("")
-			say("Hurry up! If you stand here too long something bad")
-			say("could happen.")
+			say("Acele et! Burada fazla durursan kötü şeyler olabilir.")
 			say("")
-			say("What is life? Life is short... Enjoy it as long as you can.")
+			say("Hayat nedir? Hayat kısa... Eğlenebildiğin kadar eğlen.")
 			say("")
 			set_state(gotoboss2)
 		end
@@ -176,44 +175,42 @@ quest main_quest_lv10 begin
 			local v=find_npc_by_vnum(20355)
 			if 0==v then
 			else
-				target.vid("__TARGET__", v, "Return to the Captain.")
+				target.vid("__TARGET__", v, mob_name(20355))
 			end
 		end
 		when letter begin
-			send_letter("Return to the Captain.")
+			send_letter("Yüzbaşıya Geri Dön")
 		end
 		when button or info begin
-			say_title("Mission from the Captain")
+			say_title("Yüzbaşıya Geri Dön:")
 			say("")
-			say("You got the secret document from Yu-Hwan the musician. Now")
-			say("let's bring it to the Captain.")
+			say("Yu-Hwan'dan gizli belgeleri aldın.")
+			say("Şimdi bu belgeleri Yüzbaşıya geri götür.")
 			say("")
 		end
 		when __TARGET__.target.click begin
-                        target.delete("__TARGET__")
-
-                        say_title("Captain:")
-                        say("")
-                        ----"123456789012345678901234567890123456789012345678901234567890"|
-                        say("Is that the document from the Musician?")
-                        say("")
-                        say("Not bad for a new adventurer! I have great expectations")
-                        say("of you. Take this as reward for your efforts.")
-                        say("")
-                        say("Keep up the good work for the country!")
-                        say("")
-                        say_title("Reward:")
-                        say("")
-                        say_reward("Experience points: 11.000")
-                        say_reward("Yang: 4.000")
-                        say("")
-                        pc.give_exp2( 11000 )
-                        pc.change_money( 4000 )
-                        clear_letter()
-                        set_state( __COMPLETE__ )
-                        set_quest_state("main_quest_lv12", "run")
-                end
-        end
-        state __COMPLETE__ begin
-        end
+			target.delete("__TARGET__")
+			say_title("Captain:")
+			say("")
+			say("Bu Yu-Hwan'dan gelen belgeler mi?")
+			say("")
+			say("Not bad for a new adventurer! I have great expectations")
+			say("of you. Take this as reward for your efforts.")
+			say("")
+			say("Ülken için çalışmaya devam et!")
+			say("")
+			say_title("Ödül:")
+			say("")
+			say_reward("Tecrübe Puanı: 11.000")
+			say_reward("Yang: 4.000")
+			say("")
+			pc.give_exp2(11000)
+			pc.change_money(4000)
+			clear_letter()
+			set_state( __COMPLETE__ )
+			set_quest_state("main_quest_lv12", "run")
+		end
+	end
+	state __COMPLETE__ begin
+	end
 end
