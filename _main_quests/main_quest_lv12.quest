@@ -14,24 +14,24 @@ quest main_quest_lv12 begin
                         local v=find_npc_by_vnum(20355)
                         if 0==v then
                         else
-                                target.vid("__TARGET__", v, "Find the Captain.")
+                                target.vid("__TARGET__", v, "Yüzbaşıyı Bul")
                         end
                 end
                 when button or info begin
-                        say_title("Find the Captain.")
+                        say_title("Yüzbaşıyı Bul:")
                         ----"123456789012345678901234567890123456789012345678901234567890"|
                         say("")
-                        say("The Captain has a new assignment for you.")
-                        say("Go talk to him.")
+                        say("Yüzbaşının senin için yeni bir görevi var.")
+                        say("Git ve onunla konuş.")
                         say("")
                 end
                 when __TARGET__.target.click begin
                         target.delete("__TARGET__")
 
-                        say_title("Captain:")
+                        say_mob_name()
                         say("")
                         ----"123456789012345678901234567890123456789012345678901234567890"|
-                        say("After the sky gets dark, the haunted Mu-Rang searches")
+                        say("Hava karardıktan sonra, kötü Mu-Rang searches")
                         say("for his preys among the villagers who dare to leave the")
                         say("village that late.")
                         say("")
