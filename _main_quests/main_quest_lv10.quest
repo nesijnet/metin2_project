@@ -128,7 +128,7 @@ quest main_quest_lv10 begin
 			local v=find_npc_by_vnum(20017)
 			if 0==v then
 			else
-					target.vid("__TARGET__", v, mob_name(20017))
+				target.vid("__TARGET__", v, mob_name(20017))
 			end
 		end
 		when button or info begin
@@ -190,7 +190,7 @@ quest main_quest_lv10 begin
 		end
 		when __TARGET__.target.click begin
 			target.delete("__TARGET__")
-			say_title("Captain:")
+			say_mob_name()
 			say("")
 			say("Bu Yu-Hwan'dan gelen belgeler mi?")
 			say("")
