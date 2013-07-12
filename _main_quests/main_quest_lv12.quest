@@ -41,7 +41,7 @@ quest main_quest_lv12 begin
                         wait()
                         say_title("Captain:")
                         say("")
-                        say("You don't know what a Mu-Rang is? The Mu-Rang is a wolf")
+                        say("Mu-Rang'ın kim olduğunu bilmiyor musun? The Mu-Rang is a wolf")
                         say("which roams around "..areaname[pc.get_empire()][1].."; its skin glows in a strange")
                         say("way. It's not easy to find one, but I'm sure you can manage it.")
                         say("")
